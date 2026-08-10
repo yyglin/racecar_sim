@@ -1,0 +1,25 @@
+services:
+ algorithm:
+  build:
+    context: .
+    dockerfile: docker/Dockerfile.algorithm
+  image: fsac-ground-algorithm
+  container_name: fsac-ground-algorithm
+
+
+  network_mode: host
+  ipc: host
+
+  user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+
+  environment:
+   ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-42}"
+
+  volumes:
+   - ./ros2_ws:/ws 
+   - ./data:/data:ro 
+
+  working_dir: /ws
+  command: sleep infinity
+  stdin_open: true
+  tty: true

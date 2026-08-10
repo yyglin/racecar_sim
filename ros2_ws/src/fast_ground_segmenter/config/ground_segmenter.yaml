@@ -1,0 +1,24 @@
+ground_segmenter_node:
+  ros__parameters:
+    # ROS 2 bag 或 LiDAR 的输入点云话题
+    input_topic: /sensing/lidar/top/rectified/pointcloud
+
+    # 点云 ROI 过滤参数
+    min_range: 1.0
+    max_range: 80.0
+    min_z: -3.0
+    max_z: 2.0
+
+    # 极坐标分段与分桶参数
+    num_segments: 360
+    num_bins: 120
+
+    # 局部地面线拟合参数
+    max_slope_deg: 10.0
+    max_fit_error: 0.15
+    max_start_height_error: 0.30
+    long_threshold: 2.0
+    max_long_height_error: 0.10
+
+    # 地面点分类参数
+    max_point_to_line_distance: 0.20
