@@ -1202,15 +1202,15 @@ odom
 - [ ] G1：验证 GUI 和 headless 启动
 - [x] G2：创建 `racecar_description` 包
 - [x] G2：创建 `racecar_gazebo` 包
-- [ ] G3：创建平地、锥桶和方形障碍物测试世界
-- [ ] G4：创建赛车基础 SDF 模型
-- [ ] G4：加入 32 线 `gpu_lidar`
-- [ ] G4：验证 Gazebo Transport 点云频率和坐标系
-- [ ] G5：桥接 `/clock`
-- [ ] G5：桥接 `/lidar/points`
-- [ ] G5：检查 PointCloud2 fields、时间戳和 `frame_id`
-- [ ] G6：实现 `racecar_gazebo/launch/simulation.launch.py`
-- [ ] G6：完成 `gazebo_ground_segmentation.launch.py`
+- [x] G3：创建平地、锥桶和方形障碍物测试世界
+- [x] G4：创建赛车基础 SDF 模型
+- [x] G4：加入 32 线 `gpu_lidar`
+- [x] G4：验证 Gazebo Transport 点云频率和坐标系
+- [x] G5：桥接 `/clock`
+- [x] G5：桥接 `/lidar/points`
+- [x] G5：检查 PointCloud2 fields、时间戳和 `frame_id`
+- [x] G6：实现 `racecar_gazebo/launch/simulation.launch.py`
+- [x] G6：完成 `gazebo_ground_segmentation.launch.py`
 - [ ] G6：实现一条命令启动 Gazebo、桥接和算法
 - [ ] G7：保存 Gazebo 专用算法参数
 - [ ] G7：创建地面分割 RViz2 配置

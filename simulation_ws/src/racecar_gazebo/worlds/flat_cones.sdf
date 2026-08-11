@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="flat_cones">
+    <physics name="default_physics" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin
+      filename="gz-sim-physics-system"
+      name="gz::sim::systems::Physics">
+    </plugin>
+
+    <plugin
+      filename="gz-sim-user-commands-system"
+      name="gz::sim::systems::UserCommands">
+    </plugin>
+
+    <plugin
+      filename="gz-sim-scene-broadcaster-system"
+      name="gz::sim::systems::SceneBroadcaster">
+    </plugin>
+
+    <plugin
+      filename="gz-sim-sensors-system"
+      name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.75 0.85 0.95 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <light type="directional" name="sun">
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.2 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+
+      <link name="ground_link">
+        <collision name="ground_collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+
+        <visual name="ground_visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.25 0.25 0.25 1</ambient>
+            <diffuse>0.35 0.35 0.35 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="test_box">
+      <static>true</static>
+      <pose>10 0 0.50 0 0 0</pose>
+
+      <link name="box_link">
+        <collision name="box_collision">
+          <geometry>
+            <box>
+              <size>1.0 1.0 1.0</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="box_visual">
+          <geometry>
+            <box>
+              <size>1.0 1.0 1.0</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.1 0.2 0.8 1</ambient>
+            <diffuse>0.1 0.2 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <include>
+      <uri>model://racecar</uri>
+      <name>racecar</name>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>left_cone_01</name>
+      <pose>0 3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>left_cone_02</name>
+      <pose>4 3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>left_cone_03</name>
+      <pose>8 3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>left_cone_04</name>
+      <pose>12 3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>left_cone_05</name>
+      <pose>16 3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>right_cone_01</name>
+      <pose>0 -3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>right_cone_02</name>
+      <pose>4 -3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>right_cone_03</name>
+      <pose>8 -3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>right_cone_04</name>
+      <pose>12 -3 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://track_cone</uri>
+      <name>right_cone_05</name>
+      <pose>16 -3 0 0 0 0</pose>
+    </include>
+  </world>
+</sdf>
