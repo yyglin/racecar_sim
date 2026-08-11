@@ -1,25 +1,51 @@
 services:
- algorithm:
-  build:
-    context: .
-    dockerfile: docker/Dockerfile.algorithm
-  image: fsac-ground-algorithm
-  container_name: fsac-ground-algorithm
+  algorithm:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.algorithm
+    image: fsac-ground-algorithm
+    container_name: fsac-ground-algorithm
 
+    network_mode: host
+    ipc: host
 
-  network_mode: host
-  ipc: host
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
 
-  user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    environment:
+      ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-42}"
 
-  environment:
-   ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-42}"
+    volumes:
+      - ./ros2_ws:/ws
+      - ./data:/data:ro
 
-  volumes:
-   - ./ros2_ws:/ws 
-   - ./data:/data:ro 
+    working_dir: /ws
+    command: sleep infinity
+    stdin_open: true
+    tty: true
 
-  working_dir: /ws
-  command: sleep infinity
-  stdin_open: true
-  tty: true
+  simulation:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.simulation
+    image: fsac-gazebo-simulation
+    container_name: fsac-gazebo-simulation
+
+    network_mode: host
+    ipc: host
+
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+
+    environment:
+      ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-42}"
+      DISPLAY: "${DISPLAY:-}"
+      QT_X11_NO_MITSHM: "1"
+
+    volumes:
+      - ./simulation_ws:/simulation_ws
+      - ./ros2_ws:/algorithm_ws
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+    working_dir: /simulation_ws
+    command: sleep infinity
+    stdin_open: true
+    tty: true

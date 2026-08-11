@@ -1,0 +1,18 @@
+FROM osrf/ros:jazzy-desktop
+
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    mesa-utils \
+    python3-colcon-common-extensions \
+    ros-jazzy-pcl-conversions \
+    ros-jazzy-pcl-ros \
+    ros-jazzy-robot-state-publisher \
+    ros-jazzy-ros-gz \
+    ros-jazzy-xacro \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /simulation_ws
+
+CMD ["bash"]
