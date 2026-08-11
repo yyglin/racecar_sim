@@ -59,7 +59,7 @@ racecar_sim/
         └── racecar_gazebo/
 ```
 
-目前尚未创建的目录和源文件，在实现对应阶段时再添加。
+仿真工作区的 ROS 2 包骨架已经创建；具体模型、世界、桥接配置和启动文件将在对应 Gazebo 阶段逐步添加。
 
 ## 2. 模块职责
 
@@ -1200,8 +1200,8 @@ odom
 - [ ] G1：创建 Gazebo Harmonic 仿真镜像
 - [ ] G1：在 Compose 中增加 `simulation` 服务
 - [ ] G1：验证 GUI 和 headless 启动
-- [ ] G2：创建 `racecar_description` 包
-- [ ] G2：创建 `racecar_gazebo` 包
+- [x] G2：创建 `racecar_description` 包
+- [x] G2：创建 `racecar_gazebo` 包
 - [ ] G3：创建平地、锥桶和方形障碍物测试世界
 - [ ] G4：创建赛车基础 SDF 模型
 - [ ] G4：加入 32 线 `gpu_lidar`

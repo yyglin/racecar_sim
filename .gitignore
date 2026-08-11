@@ -2,6 +2,9 @@
 ros2_ws/build/
 ros2_ws/install/
 ros2_ws/log/
+simulation_ws/build/
+simulation_ws/install/
+simulation_ws/log/
 
 # Large datasets / rosbag
 data/
