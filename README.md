@@ -467,7 +467,7 @@ Gazebo 第一版的目标不是立即构建完整自动驾驶系统，而是建�
 
 ```text
 Gazebo Harmonic 场景
-    → 32 线 gpu_lidar
+    → 128 线 gpu_lidar
     → Gazebo PointCloudPacked
     → ros_gz_bridge
     → ROS 2 PointCloud2 (/lidar/points)
@@ -740,7 +740,7 @@ LiDAR 使用 `gpu_lidar`，第一版建议参数：
 |---|---:|
 | 水平视场 | 360° |
 | 水平采样 | 720 |
-| 垂直线数 | 32 |
+| 垂直线数 | 128 |
 | 垂直视场 | -25°～15° |
 | 最小距离 | 0.3 m |
 | 最大距离 | 50 m |
@@ -788,6 +788,7 @@ ros2 topic echo /lidar/points --once
 - `header.frame_id` 为 `lidar_link`；
 - 时间戳随 `/clock` 推进；
 - `width × height` 大于零；
+- 当前 128 线模型应为 `width=720`、`height=128`，即每帧 92,160 点；
 - fields 至少包含 `x`、`y`、`z`；
 - 当前算法使用 `pcl::PointXYZI`，因此还需确认是否包含 `intensity`。
 
@@ -828,7 +829,8 @@ headless：自动测试、远程主机和无显示器环境
 `fast_ground_segmenter/launch/gazebo_ground_segmentation.launch.py` 应负责联动算法：
 
 1. 包含 `racecar_gazebo/launch/simulation.launch.py`；
-2. 加载现有 `ground_segmenter.yaml`；
+2. 默认加载 G7 的 `gazebo_ground_segmenter.yaml`，同时允许通过
+   `params_file` 切换参数文件；
 3. 只覆盖 `input_topic:=/lidar/points`；
 4. 覆盖 `use_sim_time:=true`；
 5. 保持 rosbag 启动入口及其默认输入话题不变；
@@ -906,6 +908,65 @@ fast_ground_segmenter/config/gazebo_ground_segmenter.yaml
 - 连续帧没有明显红绿闪烁；
 - 节点处理频率能够跟上 10 Hz 输入；
 - 无持续增长的内存占用和数组越界。
+
+G7 已实现以下文件：
+
+```text
+ros2_ws/src/fast_ground_segmenter/
+├── config/
+│   ├── gazebo_ground_segmenter.yaml
+│   └── gazebo_ground_segmentation.rviz
+└── launch/
+    └── gazebo_ground_segmentation.launch.py
+```
+
+联合启动入口默认执行以下行为：
+
+- 加载 Gazebo 专用参数，不改动 rosbag 使用的 `ground_segmenter.yaml`；
+- 将算法输入设为 `/lidar/points` 并启用仿真时间；
+- 默认以 `rviz:=true` 启动 RViz2；
+- 自动加载 `gazebo_ground_segmentation.rviz`；
+- 将 RViz2 Fixed Frame 设为 `lidar_link`；
+- 默认显示绿色 `/ground_points` 和红色 `/nonground_points`；
+- 预置但默认关闭原始点云、ROI 点云和桶最低点图层，便于逐层排查；
+- 五个点云显示均使用 Best Effort、Volatile QoS。
+
+G7 静止场景实测结果：
+
+| 检查项 | 实测结果 |
+|---|---|
+| 原始 LiDAR 点数 | 92,160 点/帧（720 × 128） |
+| ROI 过滤后点数 | 41,854 点/帧 |
+| 地面点数 | 41,032 点/帧 |
+| 非地面点数 | 822 点/帧 |
+| 数量守恒 | `41,032 + 822 = 41,854` |
+| 空间关系 | 非地面点聚类落在左右锥桶列和 `x≈10, y≈0` 测试箱 |
+| 频率 | Gazebo Transport 稳定约 10 Hz，算法回调稳定窗口约 10 Hz |
+| 持续运行 | 128 线配置约 160 秒无崩溃或数组越界 |
+| 节点 RSS | 运行约 158 秒时约 61.5 MiB |
+| RViz2 | X11/OpenGL 启动成功，自动订阅地面与非地面点云 |
+
+128 线点云约为 2.8 MiB/帧。并发运行多个 `ros2 topic echo` 或
+`ros2 topic hz` 会额外复制完整点云，并可能在 Best Effort QoS 下显示
+`A message was lost`。测频时应一次只订阅一个点云话题；传感器原始频率以
+`gz topic -f -t /lidar/points` 作为低开销基准。
+
+运行完整 G7 可视化：
+
+```bash
+ros2 launch fast_ground_segmenter \
+  gazebo_ground_segmentation.launch.py
+```
+
+在没有桌面环境时关闭 RViz2 和 Gazebo GUI：
+
+```bash
+ros2 launch fast_ground_segmenter \
+  gazebo_ground_segmentation.launch.py \
+  gui:=false \
+  headless:=true \
+  rviz:=false
+```
 
 ### 10.11 阶段 G8：加入 Ackermann 车辆运动
 
@@ -1011,7 +1072,7 @@ max_long_height_error
 - 少量无效测量；
 - 不同反射强度；
 - 10 Hz、15 Hz 和 20 Hz 更新率；
-- 16、32 和 64 条垂直扫描线。
+- 16、32、64 和 128 条垂直扫描线。
 
 每次只改变一个变量，记录：
 
@@ -1029,7 +1090,7 @@ CPU 和内存占用
 
 推荐性能验收：
 
-- 10 Hz、720 × 32 点云下算法持续实时运行；
+- 10 Hz、720 × 128 点云下算法持续实时运行；
 - 平均单帧处理时间小于 100 ms；
 - 输出频率接近输入频率；
 - Gazebo real-time factor 不因算法持续下降；
@@ -1204,17 +1265,17 @@ odom
 - [x] G2：创建 `racecar_gazebo` 包
 - [x] G3：创建平地、锥桶和方形障碍物测试世界
 - [x] G4：创建赛车基础 SDF 模型
-- [x] G4：加入 32 线 `gpu_lidar`
+- [x] G4：加入 128 线 `gpu_lidar`
 - [x] G4：验证 Gazebo Transport 点云频率和坐标系
 - [x] G5：桥接 `/clock`
 - [x] G5：桥接 `/lidar/points`
 - [x] G5：检查 PointCloud2 fields、时间戳和 `frame_id`
 - [x] G6：实现 `racecar_gazebo/launch/simulation.launch.py`
 - [x] G6：完成 `gazebo_ground_segmentation.launch.py`
-- [ ] G6：实现一条命令启动 Gazebo、桥接和算法
-- [ ] G7：保存 Gazebo 专用算法参数
-- [ ] G7：创建地面分割 RViz2 配置
-- [ ] G7：完成静止平地与锥桶验收
+- [x] G6：实现一条命令启动 Gazebo、桥接和算法
+- [x] G7：保存 Gazebo 专用算法参数
+- [x] G7：创建地面分割 RViz2 配置
+- [x] G7：完成静止平地与锥桶验收
 - [ ] G8：加入前轮转向和车轮旋转关节
 - [ ] G8：配置 AckermannSteering
 - [ ] G8：桥接 `/cmd_vel`、`/odom`、`/tf` 和 `/joint_states`
@@ -1231,4 +1292,4 @@ odom
 - [ ] 实现锥桶候选尺寸过滤
 - [ ] 发布锥桶三维位置与可视化 Marker
 
-当前下一步应从 **G0 算法基线** 和 **G1 仿真容器** 开始。第一项关键验收目标是：在静止平地锥桶场景中，通过 `/lidar/points` 完成地面与非地面点云分离。在该目标通过前，不加入相机、SLAM 和路径规划。
+当前 Gazebo 主线下一步是 **G8 Ackermann 车辆运动**。G7 静止平地锥桶场景已经通过，在 G8 中应保持当前点云和地面分割结果作为动态测试基线；暂不加入相机、SLAM 和路径规划。

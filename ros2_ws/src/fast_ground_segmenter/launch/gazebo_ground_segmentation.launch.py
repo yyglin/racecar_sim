@@ -17,7 +17,10 @@ def generate_launch_description():
     gazebo_share = get_package_share_directory("racecar_gazebo")
 
     default_params_file = os.path.join(
-        segmenter_share, "config", "ground_segmenter.yaml"
+        segmenter_share, "config", "gazebo_ground_segmenter.yaml"
+    )
+    default_rviz_config = os.path.join(
+        segmenter_share, "config", "gazebo_ground_segmentation.rviz"
     )
     default_world = os.path.join(
         gazebo_share, "worlds", "flat_cones.sdf"
@@ -32,6 +35,7 @@ def generate_launch_description():
     gui = LaunchConfiguration("gui")
     headless = LaunchConfiguration("headless")
     rviz = LaunchConfiguration("rviz")
+    rviz_config = LaunchConfiguration("rviz_config")
     paused = LaunchConfiguration("paused")
     verbosity = LaunchConfiguration("verbosity")
 
@@ -42,6 +46,7 @@ def generate_launch_description():
             "gui": gui,
             "headless": headless,
             "rviz": rviz,
+            "rviz_config": rviz_config,
             "paused": paused,
             "verbosity": verbosity,
         }.items(),
@@ -90,8 +95,13 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "rviz",
-                default_value="false",
-                description="Start RViz2",
+                default_value="true",
+                description="Start RViz2 with the G7 segmentation view",
+            ),
+            DeclareLaunchArgument(
+                "rviz_config",
+                default_value=default_rviz_config,
+                description="Absolute path to an RViz2 configuration file",
             ),
             DeclareLaunchArgument(
                 "paused",

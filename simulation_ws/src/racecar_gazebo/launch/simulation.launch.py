@@ -68,6 +68,7 @@ def generate_launch_description():
         "racecar_description"
     )
     racecar_gazebo_share = get_package_share_directory("racecar_gazebo")
+    rviz_common_share = get_package_share_directory("rviz_common")
 
     default_world = os.path.join(
         racecar_gazebo_share, "worlds", "flat_cones.sdf"
@@ -76,11 +77,13 @@ def generate_launch_description():
         racecar_gazebo_share, "config", "bridge.yaml"
     )
     model_path = os.path.join(racecar_description_share, "models")
+    default_rviz_config = os.path.join(rviz_common_share, "default.rviz")
 
     world = LaunchConfiguration("world")
     gui = LaunchConfiguration("gui")
     headless = LaunchConfiguration("headless")
     rviz = LaunchConfiguration("rviz")
+    rviz_config = LaunchConfiguration("rviz_config")
     paused = LaunchConfiguration("paused")
     verbosity = LaunchConfiguration("verbosity")
 
@@ -102,6 +105,7 @@ def generate_launch_description():
         executable="rviz2",
         name="rviz2",
         output="screen",
+        arguments=["-d", rviz_config],
         parameters=[{"use_sim_time": True}],
         condition=IfCondition(rviz),
     )
@@ -126,7 +130,12 @@ def generate_launch_description():
             DeclareLaunchArgument(
                 "rviz",
                 default_value="false",
-                description="Start RViz2 without a project-specific config",
+                description="Start RViz2",
+            ),
+            DeclareLaunchArgument(
+                "rviz_config",
+                default_value=default_rviz_config,
+                description="Absolute path to an RViz2 configuration file",
             ),
             DeclareLaunchArgument(
                 "paused",
@@ -156,6 +165,8 @@ def generate_launch_description():
                     gui,
                     ", headless=",
                     headless,
+                    ", rviz=",
+                    rviz,
                     ", paused=",
                     paused,
                     ", verbosity=",
