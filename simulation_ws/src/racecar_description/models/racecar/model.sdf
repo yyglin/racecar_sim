@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 <sdf version="1.9">
   <model name="racecar">
-    <!-- G4 keeps the vehicle fixed. G8 will enable dynamics and Ackermann steering. -->
-    <static>true</static>
+    <!--
+      G8 uses the kinematic bicycle relation at the axle centre and lets
+      AckermannSteering split the equivalent steering angle between the two
+      physical front wheels.
+    -->
+    <static>false</static>
     <self_collide>false</self_collide>
 
     <link name="base_link">
@@ -200,6 +204,31 @@
       </visual>
     </link>
 
+    <!-- Steering knuckles are 1.20 m apart; wheel centres are 1.34 m apart. -->
+    <link name="front_left_steering_link">
+      <pose>0.775 0.60 0.225 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.002</ixx>
+          <iyy>0.002</iyy>
+          <izz>0.002</izz>
+        </inertia>
+      </inertial>
+    </link>
+
+    <link name="front_right_steering_link">
+      <pose>0.775 -0.60 0.225 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.002</ixx>
+          <iyy>0.002</iyy>
+          <izz>0.002</izz>
+        </inertia>
+      </inertial>
+    </link>
+
     <link name="lidar_link">
       <pose>0.15 0 1.18 0 0 0</pose>
       <inertial>
@@ -262,25 +291,154 @@
       </sensor>
     </link>
 
-    <joint name="front_left_wheel_fixed_joint" type="fixed">
+    <joint name="front_left_steering_joint" type="revolute">
       <parent>base_link</parent>
+      <child>front_left_steering_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.60</lower>
+          <upper>0.60</upper>
+          <effort>500</effort>
+          <velocity>3.0</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.5</damping>
+          <friction>0.1</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <joint name="front_right_steering_joint" type="revolute">
+      <parent>base_link</parent>
+      <child>front_right_steering_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.60</lower>
+          <upper>0.60</upper>
+          <effort>500</effort>
+          <velocity>3.0</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.5</damping>
+          <friction>0.1</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <joint name="front_left_wheel_joint" type="revolute">
+      <parent>front_left_steering_link</parent>
       <child>front_left_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+          <effort>2000</effort>
+          <velocity>100</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+        </dynamics>
+      </axis>
     </joint>
-    <joint name="front_right_wheel_fixed_joint" type="fixed">
-      <parent>base_link</parent>
+
+    <joint name="front_right_wheel_joint" type="revolute">
+      <parent>front_right_steering_link</parent>
       <child>front_right_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+          <effort>2000</effort>
+          <velocity>100</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+        </dynamics>
+      </axis>
     </joint>
-    <joint name="rear_left_wheel_fixed_joint" type="fixed">
+
+    <joint name="rear_left_wheel_joint" type="revolute">
       <parent>base_link</parent>
       <child>rear_left_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+          <effort>2000</effort>
+          <velocity>100</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+        </dynamics>
+      </axis>
     </joint>
-    <joint name="rear_right_wheel_fixed_joint" type="fixed">
+
+    <joint name="rear_right_wheel_joint" type="revolute">
       <parent>base_link</parent>
       <child>rear_right_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+          <effort>2000</effort>
+          <velocity>100</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+        </dynamics>
+      </axis>
     </joint>
+
     <joint name="lidar_fixed_joint" type="fixed">
       <parent>base_link</parent>
       <child>lidar_link</child>
     </joint>
+
+    <plugin
+      filename="gz-sim-ackermann-steering-system"
+      name="gz::sim::systems::AckermannSteering">
+      <left_joint>front_left_wheel_joint</left_joint>
+      <left_joint>rear_left_wheel_joint</left_joint>
+      <right_joint>front_right_wheel_joint</right_joint>
+      <right_joint>rear_right_wheel_joint</right_joint>
+      <left_steering_joint>front_left_steering_joint</left_steering_joint>
+      <right_steering_joint>front_right_steering_joint</right_steering_joint>
+      <wheel_base>1.55</wheel_base>
+      <wheel_separation>1.34</wheel_separation>
+      <kingpin_width>1.20</kingpin_width>
+      <wheel_radius>0.225</wheel_radius>
+      <steering_limit>0.55</steering_limit>
+      <steer_p_gain>5.0</steer_p_gain>
+      <min_velocity>-5.0</min_velocity>
+      <max_velocity>5.0</max_velocity>
+      <min_acceleration>-2.0</min_acceleration>
+      <max_acceleration>2.0</max_acceleration>
+      <min_jerk>-10.0</min_jerk>
+      <max_jerk>10.0</max_jerk>
+      <topic>/model/racecar/cmd_vel</topic>
+      <odom_topic>/model/racecar/odometry</odom_topic>
+      <tf_topic>/model/racecar/tf</tf_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_link</child_frame_id>
+      <odom_publish_frequency>50</odom_publish_frequency>
+    </plugin>
+
+    <plugin
+      filename="gz-sim-joint-state-publisher-system"
+      name="gz::sim::systems::JointStatePublisher">
+      <topic>/model/racecar/joint_states</topic>
+      <joint_name>front_left_steering_joint</joint_name>
+      <joint_name>front_right_steering_joint</joint_name>
+      <joint_name>front_left_wheel_joint</joint_name>
+      <joint_name>front_right_wheel_joint</joint_name>
+      <joint_name>rear_left_wheel_joint</joint_name>
+      <joint_name>rear_right_wheel_joint</joint_name>
+    </plugin>
   </model>
 </sdf>
