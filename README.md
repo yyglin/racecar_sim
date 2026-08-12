@@ -399,8 +399,9 @@ colcon build \
 Dev Containers: Reopen in Container
 ```
 
-VS Code 会使用 `.devcontainer/devcontainer.json` 连接 `simulation` 服务。编辑器打开
-`/workspaces/racecar_sim`，算法和仿真工作区仍分别位于 `/ws` 与 `/simulation_ws`。
+VS Code 会使用 `.devcontainer/devcontainer.json` 连接 `simulation` 服务，并自动
+补齐配置中声明的容器扩展。编辑器打开 `/racecar_sim`，算法和仿真工作区
+仍分别位于 `/ws` 与 `/simulation_ws`。
 容器终端会自动加载 ROS 2 Jazzy 和已经构建的工作区。
 
 第一次进入后可在 VS Code 容器终端构建：
