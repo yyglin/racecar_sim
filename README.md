@@ -391,6 +391,30 @@ colcon build \
   --packages-select fast_ground_segmenter
 ```
 
+### 7.3 使用 VS Code Dev Container
+
+宿主机 VS Code 安装 `Dev Containers` 扩展后打开项目根目录，执行命令面板中的：
+
+```text
+Dev Containers: Reopen in Container
+```
+
+VS Code 会使用 `.devcontainer/devcontainer.json` 连接 `simulation` 服务。编辑器打开
+`/workspaces/racecar_sim`，算法和仿真工作区仍分别位于 `/ws` 与 `/simulation_ws`。
+容器终端会自动加载 ROS 2 Jazzy 和已经构建的工作区。
+
+第一次进入后可在 VS Code 容器终端构建：
+
+```bash
+cd /ws
+colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+source install/setup.bash
+
+cd /simulation_ws
+colcon build --symlink-install
+source install/setup.bash
+```
+
 ## 8. rosbag 测试
 
 在容器中播放 `trucks` 数据：
@@ -594,18 +618,18 @@ python3-colcon-common-extensions
 
 ```text
 宿主机 simulation_ws → 容器 /simulation_ws
-宿主机 ros2_ws       → 容器 /algorithm_ws
+宿主机 ros2_ws       → 容器 /ws
 ```
 
-两个工作区分别构建：
+两个工作区按 underlay 到 overlay 的顺序构建：
 
 ```bash
-cd /simulation_ws
+cd /ws
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 
-cd /algorithm_ws
-source /opt/ros/jazzy/setup.bash
+source /ws/install/setup.bash
+cd /simulation_ws
 colcon build --symlink-install
 ```
 
@@ -613,8 +637,8 @@ colcon build --symlink-install
 
 ```bash
 source /opt/ros/jazzy/setup.bash
+source /ws/install/setup.bash
 source /simulation_ws/install/setup.bash
-source /algorithm_ws/install/setup.bash
 ```
 
 验收标准：

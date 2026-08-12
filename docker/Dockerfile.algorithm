@@ -1,16 +1,63 @@
-FROM ros:jazzy-ros-base
+FROM ros:jazzy-ros-base-noble
 
-SHELL [ "/bin/bash", "-c" ]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    python3-colcon-common-extensions \
-    ros-jazzy-pcl-ros \
-    ros-jazzy-pcl-conversions \
-    ros-jazzy-rosbag2 \
-    ros-jazzy-rosbag2-storage-default-plugins \
+ARG DEBIAN_FRONTEND=noninteractive
+ARG USERNAME=developer
+ARG USER_UID=1000
+ARG USER_GID=1000
+
+# ROS 2 Jazzy is built for Ubuntu 24.04 (Noble).  Install the algorithm and
+# day-to-day development dependencies in the image so a rebuilt container is
+# immediately ready for colcon/rosdep work.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        ccache \
+        gdb \
+        git \
+        less \
+        python3-colcon-common-extensions \
+        python3-pip \
+        python3-rosdep \
+        python3-vcstool \
+        ros-jazzy-pcl-conversions \
+        ros-jazzy-pcl-ros \
+        ros-jazzy-rosbag2 \
+        ros-jazzy-rosbag2-storage-default-plugins \
+        ros-jazzy-rviz2 \
+        sudo \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /ws
+# Match the host user's numeric IDs.  Ubuntu Noble images may already contain
+# UID/GID 1000, so reuse and rename those entries when necessary.
+RUN existing_group="$(getent group "${USER_GID}" | cut -d: -f1 || true)" \
+    && if [[ -z "${existing_group}" ]]; then \
+         groupadd --gid "${USER_GID}" "${USERNAME}"; \
+         existing_group="${USERNAME}"; \
+       fi \
+    && existing_user="$(getent passwd "${USER_UID}" | cut -d: -f1 || true)" \
+    && if [[ -n "${existing_user}" && "${existing_user}" != "${USERNAME}" ]]; then \
+         usermod --login "${USERNAME}" --home "/home/${USERNAME}" --move-home "${existing_user}"; \
+       elif [[ -z "${existing_user}" ]]; then \
+         useradd --uid "${USER_UID}" --gid "${existing_group}" --create-home --shell /bin/bash "${USERNAME}"; \
+       fi \
+    && usermod --gid "${existing_group}" --append --groups sudo "${USERNAME}" \
+    && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > "/etc/sudoers.d/${USERNAME}" \
+    && chmod 0440 "/etc/sudoers.d/${USERNAME}" \
+    && printf '%s\n' \
+         'source /opt/ros/jazzy/setup.bash' \
+         '[[ -f /ws/install/setup.bash ]] && source /ws/install/setup.bash' \
+         >> "/home/${USERNAME}/.bashrc" \
+    && chown "${USER_UID}:${USER_GID}" "/home/${USERNAME}/.bashrc"
 
-CMD ["bash"]
+ENV ROS_DISTRO=jazzy \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    HOME=/home/${USERNAME} \
+    CCACHE_DIR=/home/${USERNAME}/.cache/ccache
+
+WORKDIR /ws
+USER ${USERNAME}
+
+CMD ["sleep", "infinity"]
