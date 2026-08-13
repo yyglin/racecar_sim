@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="track_cone_red">
+    <static>true</static>
+
+    <link name="cone_link">
+      <!-- White placement box required around every cone position. -->
+      <visual name="position_box_front">
+        <pose>0.0 0.1125 0.002 0 0 0</pose>
+        <geometry><box><size>0.24 0.015 0.004</size></box></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+      <visual name="position_box_rear">
+        <pose>0.0 -0.1125 0.002 0 0 0</pose>
+        <geometry><box><size>0.24 0.015 0.004</size></box></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+      <visual name="position_box_left">
+        <pose>0.1125 0.0 0.002 0 0 0</pose>
+        <geometry><box><size>0.015 0.21 0.004</size></box></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+      <visual name="position_box_right">
+        <pose>-0.1125 0.0 0.002 0 0 0</pose>
+        <geometry><box><size>0.015 0.21 0.004</size></box></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+
+      <collision name="base_collision">
+        <pose>0 0 0.01 0 0 0</pose>
+        <geometry><box><size>0.20 0.20 0.02</size></box></geometry>
+      </collision>
+      <collision name="body_collision">
+        <pose>0 0 0.16 0 0 0</pose>
+        <geometry><cylinder><radius>0.05</radius><length>0.28</length></cylinder></geometry>
+      </collision>
+
+      <visual name="base_visual">
+        <pose>0 0 0.01 0 0 0</pose>
+        <geometry><box><size>0.20 0.20 0.02</size></box></geometry>
+        <material>
+          <ambient>0.65 0.01 0.01 1</ambient>
+          <diffuse>1.00 0.02 0.02 1</diffuse>
+        </material>
+      </visual>
+      <visual name="body_visual">
+        <pose>0 0 0.16 0 0 0</pose>
+        <geometry><cone><radius>0.09</radius><length>0.28</length></cone></geometry>
+        <material>
+          <ambient>0.65 0.01 0.01 1</ambient>
+          <diffuse>1.00 0.02 0.02 1</diffuse>
+        </material>
+      </visual>
+      <visual name="white_band_visual">
+        <pose>0 0 0.19 0 0 0</pose>
+        <geometry><cylinder><radius>0.037</radius><length>0.04</length></cylinder></geometry>
+        <material>
+          <ambient>0.95 0.95 0.95 1</ambient>
+          <diffuse>1.00 1.00 1.00 1</diffuse>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

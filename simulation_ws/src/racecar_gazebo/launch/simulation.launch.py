@@ -71,7 +71,7 @@ def generate_launch_description():
     rviz_common_share = get_package_share_directory("rviz_common")
 
     default_world = os.path.join(
-        racecar_gazebo_share, "worlds", "flat_cones.sdf"
+        racecar_gazebo_share, "worlds", "skidpad.sdf"
     )
     bridge_config = os.path.join(
         racecar_gazebo_share, "config", "bridge.yaml"

@@ -545,7 +545,8 @@ simulation_ws/src/
     │   ├── simulation.launch.py
     │   └── spawn_racecar.launch.py   # 使用外部生成模型时再增加
     └── worlds/
-        ├── flat_cones.sdf
+        ├── skidpad.sdf          # 规则尺寸八字绕环（默认）
+        ├── flat_cones.sdf       # G7 平地感知回归场景
         ├── slope_test.sdf
         └── uneven_road.sdf
 ```
@@ -1022,6 +1023,53 @@ ROS 2 /cmd_vel
 ros2 topic pub --rate 10 /cmd_vel geometry_msgs/msg/Twist \
   "{linear: {x: 1.0}, angular: {z: 0.0}}"
 ```
+
+#### 使用键盘方向键控制
+
+先在终端 1 启动 Gazebo：
+
+```bash
+cd /simulation_ws
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+ros2 launch racecar_gazebo simulation.launch.py
+```
+
+再打开终端 2，运行键盘遥控节点：
+
+```bash
+cd /simulation_ws
+source /opt/ros/jazzy/setup.bash
+source install/setup.bash
+ros2 run racecar_gazebo keyboard_teleop
+```
+
+运行遥控节点的终端必须保持键盘焦点。按键功能如下：
+
+| 按键 | 功能 |
+|---|---|
+| `↑` / `↓` | 增加前进速度 / 降低速度并进入倒车 |
+| `←` / `→` | 增加左转 / 右转 |
+| `C` | 转向回中，保持当前速度 |
+| `Space` 或 `S` | 立即停车 |
+| `Q` 或 `Esc` | 停车并退出 |
+
+速度和转向采用渐进调整。默认最大线速度为 `2.0 m/s`，最大角速度为
+`0.60 rad/s`。释放按键超过 `0.8 s` 后节点会自动发布停车命令。
+
+可以通过 ROS 参数调整控制手感，例如：
+
+```bash
+ros2 run racecar_gazebo keyboard_teleop --ros-args \
+  -p linear_step:=0.10 \
+  -p angular_step:=0.05 \
+  -p max_linear_speed:=1.0 \
+  -p max_angular_speed:=0.40 \
+  -p command_timeout:=1.0
+```
+
+使用键盘前，应停止其他持续发布 `/cmd_vel` 的命令或节点，否则不同发布者的
+控制命令会互相覆盖。
 
 测试顺序：
 

@@ -23,7 +23,7 @@ def generate_launch_description():
         segmenter_share, "config", "gazebo_ground_segmentation.rviz"
     )
     default_world = os.path.join(
-        gazebo_share, "worlds", "flat_cones.sdf"
+        gazebo_share, "worlds", "skidpad.sdf"
     )
     simulation_launch = os.path.join(
         gazebo_share, "launch", "simulation.launch.py"

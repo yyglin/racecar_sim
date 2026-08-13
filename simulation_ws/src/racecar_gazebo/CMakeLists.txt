@@ -8,4 +8,10 @@ install(
   DESTINATION share/${PROJECT_NAME}
 )
 
+install(
+  PROGRAMS scripts/keyboard_teleop.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME keyboard_teleop
+)
+
 ament_package()
