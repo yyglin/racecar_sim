@@ -1518,179 +1518,176 @@
       </link>
     </model>
 
-    <!-- Inner cones: 17 markers per circle. The pattern is rotated by
-         half a cone interval so that the two central markers on each
-         side straddle the start / finish line symmetrically. Those four
-         tangent-point markers use yellow high cones. -->
+    <!-- Inner cones: 17 inside each nominal 15.25 m diameter circle. -->
     <include>
-      <uri>model://track_cone_yellow_big</uri>
-      <name>left_inner_yellow_high_01</name>
-      <pose>-1.7527 1.3781 0 0 0 0.000000</pose>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_01</name>
+      <pose>-1.6250 0.0000 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_02</name>
-      <pose>-2.7484 3.9482 0 0 0 0.000000</pose>
+      <pose>-2.1315 2.7093 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_03</name>
-      <pose>-4.6052 5.9851 0 0 0 0.000000</pose>
+      <pose>-3.5824 5.0527 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_04</name>
-      <pose>-7.0725 7.2137 0 0 0 0.000000</pose>
+      <pose>-5.7820 6.7137 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_05</name>
-      <pose>-9.8170 7.4680 0 0 0 0.000000</pose>
+      <pose>-8.4330 7.4680 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_06</name>
-      <pose>-12.4680 6.7137 0 0 0 0.000000</pose>
+      <pose>-11.1775 7.2137 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_07</name>
-      <pose>-14.6676 5.0527 0 0 0 0.000000</pose>
+      <pose>-13.6448 5.9851 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_08</name>
-      <pose>-16.1185 2.7093 0 0 0 0.000000</pose>
+      <pose>-15.5016 3.9482 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_09</name>
-      <pose>-16.6250 0.0000 0 0 0 0.000000</pose>
+      <pose>-16.4973 1.3781 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_10</name>
-      <pose>-16.1185 -2.7093 0 0 0 0.000000</pose>
+      <pose>-16.4973 -1.3781 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_11</name>
-      <pose>-14.6676 -5.0527 0 0 0 0.000000</pose>
+      <pose>-15.5016 -3.9482 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_12</name>
-      <pose>-12.4680 -6.7137 0 0 0 0.000000</pose>
+      <pose>-13.6448 -5.9851 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_13</name>
-      <pose>-9.8170 -7.4680 0 0 0 0.000000</pose>
+      <pose>-11.1775 -7.2137 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_14</name>
-      <pose>-7.0725 -7.2137 0 0 0 0.000000</pose>
+      <pose>-8.4330 -7.4680 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_15</name>
-      <pose>-4.6052 -5.9851 0 0 0 0.000000</pose>
+      <pose>-5.7820 -6.7137 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_red</uri>
       <name>left_inner_red_16</name>
-      <pose>-2.7484 -3.9482 0 0 0 0.000000</pose>
+      <pose>-3.5824 -5.0527 0 0 0 0.000000</pose>
     </include>
     <include>
-      <uri>model://track_cone_yellow_big</uri>
-      <name>left_inner_yellow_high_17</name>
-      <pose>-1.7527 -1.3781 0 0 0 0.000000</pose>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_17</name>
+      <pose>-2.1315 -2.7093 0 0 0 0.000000</pose>
     </include>
     <include>
-      <uri>model://track_cone_yellow_big</uri>
-      <name>right_inner_yellow_high_01</name>
-      <pose>1.7527 -1.3781 0 0 0 0.000000</pose>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_01</name>
+      <pose>1.6250 0.0000 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_02</name>
-      <pose>2.7484 -3.9482 0 0 0 0.000000</pose>
+      <pose>2.1315 -2.7093 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_03</name>
-      <pose>4.6052 -5.9851 0 0 0 0.000000</pose>
+      <pose>3.5824 -5.0527 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_04</name>
-      <pose>7.0725 -7.2137 0 0 0 0.000000</pose>
+      <pose>5.7820 -6.7137 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_05</name>
-      <pose>9.8170 -7.4680 0 0 0 0.000000</pose>
+      <pose>8.4330 -7.4680 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_06</name>
-      <pose>12.4680 -6.7137 0 0 0 0.000000</pose>
+      <pose>11.1775 -7.2137 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_07</name>
-      <pose>14.6676 -5.0527 0 0 0 0.000000</pose>
+      <pose>13.6448 -5.9851 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_08</name>
-      <pose>16.1185 -2.7093 0 0 0 0.000000</pose>
+      <pose>15.5016 -3.9482 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_09</name>
-      <pose>16.6250 -0.0000 0 0 0 0.000000</pose>
+      <pose>16.4973 -1.3781 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_10</name>
-      <pose>16.1185 2.7093 0 0 0 0.000000</pose>
+      <pose>16.4973 1.3781 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_11</name>
-      <pose>14.6676 5.0527 0 0 0 0.000000</pose>
+      <pose>15.5016 3.9482 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_12</name>
-      <pose>12.4680 6.7137 0 0 0 0.000000</pose>
+      <pose>13.6448 5.9851 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_13</name>
-      <pose>9.8170 7.4680 0 0 0 0.000000</pose>
+      <pose>11.1775 7.2137 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_14</name>
-      <pose>7.0725 7.2137 0 0 0 0.000000</pose>
+      <pose>8.4330 7.4680 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_15</name>
-      <pose>4.6052 5.9851 0 0 0 0.000000</pose>
+      <pose>5.7820 6.7137 0 0 0 0.000000</pose>
     </include>
     <include>
       <uri>model://track_cone_blue</uri>
       <name>right_inner_blue_16</name>
-      <pose>2.7484 3.9482 0 0 0 0.000000</pose>
+      <pose>3.5824 5.0527 0 0 0 0.000000</pose>
     </include>
     <include>
-      <uri>model://track_cone_yellow_big</uri>
-      <name>right_inner_yellow_high_17</name>
-      <pose>1.7527 1.3781 0 0 0 0.000000</pose>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_17</name>
+      <pose>2.1315 2.7093 0 0 0 0.000000</pose>
     </include>
 
     <!-- Outer cones: 13 outside each nominal 21.25 m diameter circle.
@@ -1826,7 +1823,27 @@
       <pose>1.5236 7.6014 0 0 0 0.000000</pose>
     </include>
 
-    <!-- The entry / exit tangent path remains open. -->
+    <!-- One 3 m gate at the entrance and one at the exit, as in Figure 21. -->
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>entry_gate_left_red</name>
+      <pose>-1.5000 -15.0000 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>entry_gate_right_blue</name>
+      <pose>1.5000 -15.0000 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>exit_gate_left_red</name>
+      <pose>-1.5000 15.0000 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>exit_gate_right_blue</name>
+      <pose>1.5000 15.0000 0 0 0 0.000000</pose>
+    </include>
 
     <include>
       <uri>model://racecar</uri>

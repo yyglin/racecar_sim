@@ -27,7 +27,7 @@ racecar_sim/
 ├── docker/
 │   ├── Dockerfile.algorithm           # ROS 2 Jazzy 算法镜像
 │   └── Dockerfile.simulation          # 后续 Gazebo Harmonic 仿真镜像
-├── ros2_ws/                           # 地面分割算法工作区，挂载到容器 /ws
+├── Fast_Segmentation_ws/              # 地面分割算法工作区，挂载到容器 /Fast_Segmentation_ws
 │   └── src/
 │       └── fast_ground_segmenter/
 │           ├── CMakeLists.txt
@@ -307,7 +307,7 @@ output.header = input.header;
 
 ## 6. 参数文件示例
 
-`ros2_ws/src/fast_ground_segmenter/config/ground_segmenter.yaml`：
+`Fast_Segmentation_ws/src/fast_ground_segmenter/config/ground_segmenter.yaml`：
 
 ```yaml
 ground_segmenter_node:
@@ -355,7 +355,7 @@ docker compose exec algorithm bash
 目录映射：
 
 ```text
-宿主机 ~/racecar_sim/ros2_ws  → 容器 /ws
+宿主机 ~/racecar_sim/Fast_Segmentation_ws  → 容器 /Fast_Segmentation_ws
 宿主机 ~/racecar_sim/data     → 容器 /data（只读）
 ```
 
@@ -376,7 +376,7 @@ docker compose down
 进入容器后执行：
 
 ```bash
-cd /ws
+cd /Fast_Segmentation_ws
 source /opt/ros/jazzy/setup.bash
 
 colcon build --symlink-install
@@ -401,13 +401,13 @@ Dev Containers: Reopen in Container
 
 VS Code 会使用 `.devcontainer/devcontainer.json` 连接 `simulation` 服务，并自动
 补齐配置中声明的容器扩展。编辑器打开 `/racecar_sim`，算法和仿真工作区
-仍分别位于 `/ws` 与 `/simulation_ws`。
+仍分别位于 `/Fast_Segmentation_ws` 与 `/simulation_ws`。
 容器终端会自动加载 ROS 2 Jazzy 和已经构建的工作区。
 
 第一次进入后可在 VS Code 容器终端构建：
 
 ```bash
-cd /ws
+cd /Fast_Segmentation_ws
 colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 source install/setup.bash
 
@@ -569,7 +569,7 @@ simulation_ws/src/
 docker compose up -d --build algorithm
 docker compose exec algorithm bash
 
-cd /ws
+cd /Fast_Segmentation_ws
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 source install/setup.bash
@@ -611,7 +611,7 @@ python3-colcon-common-extensions
 - `network_mode: host`，让两个容器通过同一 ROS Domain 通信；
 - 与算法容器相同的 `ROS_DOMAIN_ID`；
 - 挂载 `simulation_ws`；
-- 挂载 `ros2_ws`，便于在同一容器执行一体化启动；
+- 挂载 `Fast_Segmentation_ws`，便于在同一容器执行一体化启动；
 - GUI 模式下传入 `DISPLAY` 并挂载 `/tmp/.X11-unix`；
 - 保留无 GUI 的 headless 启动方式，方便 CI 和远程服务器验证；
 - 继续使用宿主机 UID/GID，避免构建产物变为 root 所有。
@@ -620,17 +620,17 @@ python3-colcon-common-extensions
 
 ```text
 宿主机 simulation_ws → 容器 /simulation_ws
-宿主机 ros2_ws       → 容器 /ws
+宿主机 Fast_Segmentation_ws → 容器 /Fast_Segmentation_ws
 ```
 
 两个工作区按 underlay 到 overlay 的顺序构建：
 
 ```bash
-cd /ws
+cd /Fast_Segmentation_ws
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 
-source /ws/install/setup.bash
+source /Fast_Segmentation_ws/install/setup.bash
 cd /simulation_ws
 colcon build --symlink-install
 ```
@@ -639,7 +639,7 @@ colcon build --symlink-install
 
 ```bash
 source /opt/ros/jazzy/setup.bash
-source /ws/install/setup.bash
+source /Fast_Segmentation_ws/install/setup.bash
 source /simulation_ws/install/setup.bash
 ```
 
@@ -938,7 +938,7 @@ fast_ground_segmenter/config/gazebo_ground_segmenter.yaml
 G7 已实现以下文件：
 
 ```text
-ros2_ws/src/fast_ground_segmenter/
+Fast_Segmentation_ws/src/fast_ground_segmenter/
 ├── config/
 │   ├── gazebo_ground_segmenter.yaml
 │   └── gazebo_ground_segmentation.rviz

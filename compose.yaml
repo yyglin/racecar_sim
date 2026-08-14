@@ -27,10 +27,10 @@ services:
     volumes:
       - ${HOME}/.codex:/.codex
       - .:/racecar_sim
-      - ./ros2_ws:/ws
+      - ./Fast_Segmentation_ws:/Fast_Segmentation_ws
       - ./data:/data:ro
 
-    working_dir: /ws
+    working_dir: /Fast_Segmentation_ws
     command: ["sleep", "infinity"]
     stdin_open: true
     tty: true
@@ -84,8 +84,8 @@ services:
       - .:/racecar_sim
       - ./simulation_ws:/simulation_ws
       # Keep the algorithm workspace at the same absolute path in both
-      # containers.  colcon --symlink-install creates links containing /ws.
-      - ./ros2_ws:/ws
+      # containers.  colcon --symlink-install creates links containing /Fast_Segmentation_ws.
+      - ./Fast_Segmentation_ws:/Fast_Segmentation_ws
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
 
     working_dir: /simulation_ws

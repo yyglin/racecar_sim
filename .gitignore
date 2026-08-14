@@ -1,7 +1,7 @@
 # ROS 2
-ros2_ws/build/
-ros2_ws/install/
-ros2_ws/log/
+Fast_Segmentation_ws/build/
+Fast_Segmentation_ws/install/
+Fast_Segmentation_ws/log/
 simulation_ws/build/
 simulation_ws/install/
 simulation_ws/log/

@@ -47,7 +47,7 @@ RUN existing_group="$(getent group "${USER_GID}" | cut -d: -f1 || true)" \
     && chmod 0440 "/etc/sudoers.d/${USERNAME}" \
     && printf '%s\n' \
          'source /opt/ros/jazzy/setup.bash' \
-         '[[ -f /ws/install/setup.bash ]] && source /ws/install/setup.bash' \
+         '[[ -f /Fast_Segmentation_ws/install/setup.bash ]] && source /Fast_Segmentation_ws/install/setup.bash' \
          >> "/home/${USERNAME}/.bashrc" \
     && chown "${USER_UID}:${USER_GID}" "/home/${USERNAME}/.bashrc"
 
@@ -57,7 +57,7 @@ ENV ROS_DISTRO=jazzy \
     HOME=/home/${USERNAME} \
     CCACHE_DIR=/home/${USERNAME}/.cache/ccache
 
-WORKDIR /ws
+WORKDIR /Fast_Segmentation_ws
 USER ${USERNAME}
 
 CMD ["sleep", "infinity"]
