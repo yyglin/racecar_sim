@@ -5,7 +5,7 @@
     "runServices": [
         "simulation"
     ],
-    "workspaceFolder": "/racecar_sim",
+    "workspaceFolder": "/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles",
     "remoteUser": "developer",
     "shutdownAction": "none",
     "customizations": {

@@ -26,7 +26,7 @@ services:
 
     volumes:
       - ${HOME}/.codex:/.codex
-      - .:/racecar_sim
+      - .:/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles
       - ./Fast_Segmentation_ws:/Fast_Segmentation_ws
       - ./data:/data:ro
 
@@ -81,7 +81,7 @@ services:
 
     volumes:
       - ${HOME}/.codex:/.codex
-      - .:/racecar_sim
+      - .:/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles
       - ./simulation_ws:/simulation_ws
       # Keep the algorithm workspace at the same absolute path in both
       # containers.  colcon --symlink-install creates links containing /Fast_Segmentation_ws.

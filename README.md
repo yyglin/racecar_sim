@@ -400,7 +400,7 @@ Dev Containers: Reopen in Container
 ```
 
 VS Code 会使用 `.devcontainer/devcontainer.json` 连接 `simulation` 服务，并自动
-补齐配置中声明的容器扩展。编辑器打开 `/racecar_sim`，算法和仿真工作区
+补齐配置中声明的容器扩展。编辑器打开 `/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles`，算法和仿真工作区
 仍分别位于 `/Fast_Segmentation_ws` 与 `/simulation_ws`。
 容器终端会自动加载 ROS 2 Jazzy 和已经构建的工作区。
 
