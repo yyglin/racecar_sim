@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="track_cone_yellow_big">
+    <static>true</static>
+
+    <link name="cone_link">
+      <!-- White placement box required around every cone position. -->
+      <visual name="position_box_front">
+        <pose>0.0 0.1975 0.002 0 0 0</pose>
+        <geometry><box><size>0.42 0.025 0.004</size></box></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+      <visual name="position_box_rear">
+        <pose>0.0 -0.1975 0.002 0 0 0</pose>
+        <geometry><box><size>0.42 0.025 0.004</size></box></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+      <visual name="position_box_left">
+        <pose>0.1975 0.0 0.002 0 0 0</pose>
+        <geometry><box><size>0.025 0.37 0.004</size></box></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+      <visual name="position_box_right">
+        <pose>-0.1975 0.0 0.002 0 0 0</pose>
+        <geometry><box><size>0.025 0.37 0.004</size></box></geometry>
+        <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+
+      <collision name="base_collision">
+        <pose>0 0 0.02 0 0 0</pose>
+        <geometry><box><size>0.35 0.35 0.04</size></box></geometry>
+      </collision>
+      <collision name="body_collision">
+        <pose>0 0 0.37 0 0 0</pose>
+        <geometry><cylinder><radius>0.08</radius><length>0.66</length></cylinder></geometry>
+      </collision>
+
+      <visual name="base_visual">
+        <pose>0 0 0.02 0 0 0</pose>
+        <geometry><box><size>0.35 0.35 0.04</size></box></geometry>
+        <material><ambient>0.75 0.55 0.01 1</ambient><diffuse>1.00 0.85 0.02 1</diffuse></material>
+      </visual>
+      <visual name="body_visual">
+        <pose>0 0 0.37 0 0 0</pose>
+        <geometry><cone><radius>0.15</radius><length>0.66</length></cone></geometry>
+        <material><ambient>0.75 0.55 0.01 1</ambient><diffuse>1.00 0.85 0.02 1</diffuse></material>
+      </visual>
+      <visual name="lower_white_band_visual">
+        <pose>0 0 0.34 0 0 0</pose>
+        <geometry><cylinder><radius>0.082</radius><length>0.06</length></cylinder></geometry>
+        <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+      <visual name="upper_white_band_visual">
+        <pose>0 0 0.50 0 0 0</pose>
+        <geometry><cylinder><radius>0.047</radius><length>0.06</length></cylinder></geometry>
+        <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+      </visual>
+    </link>
+  </model>
+</sdf>

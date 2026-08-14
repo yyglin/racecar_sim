@@ -1,0 +1,1838 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <world name="skidpad">
+    <!--
+      Formula Student Germany 2026 D4 / Figure 21:
+        two concentric-circle pairs in a figure eight;
+        centres at (-9.125, 0) and (9.125, 0), 18.25 m apart;
+        inner diameter 15.25 m and outer diameter 21.25 m;
+        3.00 m path between the nominal circle markings;
+        17 cones inside each inner circle and 13 cones outside each outer circle.
+      The nominal white markings use radii 7.625 m and 10.625 m.
+      Cone centres are offset away from the driving path: 7.50 m and 10.75 m.
+      Entry and exit use the vertical 3 m tangent path shown in Figure 21.
+      Cone colours are approximate and do not affect the FSG geometry.
+    -->
+    <physics name="default_physics" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.75 0.85 0.95 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <light type="directional" name="sun">
+      <pose>0 0 30 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.2 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="ground_link">
+        <collision name="ground_collision">
+          <geometry><plane><normal>0 0 1</normal><size>100 60</size></plane></geometry>
+          <surface><friction><ode><mu>1.2</mu><mu2>1.0</mu2></ode></friction></surface>
+        </collision>
+        <visual name="ground_visual">
+          <geometry><plane><normal>0 0 1</normal><size>100 60</size></plane></geometry>
+          <material>
+            <ambient>0.22 0.22 0.22 1</ambient>
+            <diffuse>0.30 0.30 0.30 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="skidpad_markings">
+      <static>true</static>
+      <link name="marking_link">
+        <visual name="left_inner_boundary_01">
+          <pose>-1.5073 0.3326 0.004 0 0 1.614430</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_02">
+          <pose>-1.5652 0.9953 0.004 0 0 1.701696</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_03">
+          <pose>-1.6807 1.6504 0.004 0 0 1.788962</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_04">
+          <pose>-1.8529 2.2929 0.004 0 0 1.876229</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_05">
+          <pose>-2.0804 2.9180 0.004 0 0 1.963495</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_06">
+          <pose>-2.3615 3.5208 0.004 0 0 2.050762</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_07">
+          <pose>-2.6941 4.0969 0.004 0 0 2.138028</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_08">
+          <pose>-3.0757 4.6418 0.004 0 0 2.225295</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_09">
+          <pose>-3.5033 5.1514 0.004 0 0 2.312561</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_10">
+          <pose>-3.9736 5.6217 0.004 0 0 2.399828</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_11">
+          <pose>-4.4832 6.0493 0.004 0 0 2.487094</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_12">
+          <pose>-5.0281 6.4309 0.004 0 0 2.574361</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_13">
+          <pose>-5.6042 6.7635 0.004 0 0 2.661627</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_14">
+          <pose>-6.2070 7.0446 0.004 0 0 2.748894</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_15">
+          <pose>-6.8321 7.2721 0.004 0 0 2.836160</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_16">
+          <pose>-7.4746 7.4443 0.004 0 0 2.923426</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_17">
+          <pose>-8.1297 7.5598 0.004 0 0 3.010693</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_18">
+          <pose>-8.7924 7.6177 0.004 0 0 3.097959</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_19">
+          <pose>-9.4576 7.6177 0.004 0 0 3.185226</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_20">
+          <pose>-10.1203 7.5598 0.004 0 0 3.272492</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_21">
+          <pose>-10.7754 7.4443 0.004 0 0 3.359759</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_22">
+          <pose>-11.4179 7.2721 0.004 0 0 3.447025</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_23">
+          <pose>-12.0430 7.0446 0.004 0 0 3.534292</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_24">
+          <pose>-12.6458 6.7635 0.004 0 0 3.621558</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_25">
+          <pose>-13.2219 6.4309 0.004 0 0 3.708825</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_26">
+          <pose>-13.7668 6.0493 0.004 0 0 3.796091</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_27">
+          <pose>-14.2764 5.6217 0.004 0 0 3.883358</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_28">
+          <pose>-14.7467 5.1514 0.004 0 0 3.970624</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_29">
+          <pose>-15.1743 4.6418 0.004 0 0 4.057891</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_30">
+          <pose>-15.5559 4.0969 0.004 0 0 4.145157</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_31">
+          <pose>-15.8885 3.5208 0.004 0 0 4.232423</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_32">
+          <pose>-16.1696 2.9180 0.004 0 0 4.319690</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_33">
+          <pose>-16.3971 2.2929 0.004 0 0 4.406956</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_34">
+          <pose>-16.5693 1.6504 0.004 0 0 4.494223</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_35">
+          <pose>-16.6848 0.9953 0.004 0 0 4.581489</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_36">
+          <pose>-16.7427 0.3326 0.004 0 0 4.668756</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_37">
+          <pose>-16.7427 -0.3326 0.004 0 0 4.756022</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_38">
+          <pose>-16.6848 -0.9953 0.004 0 0 4.843289</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_39">
+          <pose>-16.5693 -1.6504 0.004 0 0 4.930555</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_40">
+          <pose>-16.3971 -2.2929 0.004 0 0 5.017822</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_41">
+          <pose>-16.1696 -2.9180 0.004 0 0 5.105088</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_42">
+          <pose>-15.8885 -3.5208 0.004 0 0 5.192355</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_43">
+          <pose>-15.5559 -4.0969 0.004 0 0 5.279621</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_44">
+          <pose>-15.1743 -4.6418 0.004 0 0 5.366887</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_45">
+          <pose>-14.7467 -5.1514 0.004 0 0 5.454154</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_46">
+          <pose>-14.2764 -5.6217 0.004 0 0 5.541420</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_47">
+          <pose>-13.7668 -6.0493 0.004 0 0 5.628687</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_48">
+          <pose>-13.2219 -6.4309 0.004 0 0 5.715953</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_49">
+          <pose>-12.6458 -6.7635 0.004 0 0 5.803220</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_50">
+          <pose>-12.0430 -7.0446 0.004 0 0 5.890486</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_51">
+          <pose>-11.4179 -7.2721 0.004 0 0 5.977753</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_52">
+          <pose>-10.7754 -7.4443 0.004 0 0 6.065019</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_53">
+          <pose>-10.1203 -7.5598 0.004 0 0 6.152286</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_54">
+          <pose>-9.4576 -7.6177 0.004 0 0 6.239552</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_55">
+          <pose>-8.7924 -7.6177 0.004 0 0 6.326819</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_56">
+          <pose>-8.1297 -7.5598 0.004 0 0 6.414085</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_57">
+          <pose>-7.4746 -7.4443 0.004 0 0 6.501351</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_58">
+          <pose>-6.8321 -7.2721 0.004 0 0 6.588618</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_59">
+          <pose>-6.2070 -7.0446 0.004 0 0 6.675884</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_60">
+          <pose>-5.6042 -6.7635 0.004 0 0 6.763151</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_61">
+          <pose>-5.0281 -6.4309 0.004 0 0 6.850417</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_62">
+          <pose>-4.4832 -6.0493 0.004 0 0 6.937684</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_63">
+          <pose>-3.9736 -5.6217 0.004 0 0 7.024950</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_64">
+          <pose>-3.5033 -5.1514 0.004 0 0 7.112217</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_65">
+          <pose>-3.0757 -4.6418 0.004 0 0 7.199483</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_66">
+          <pose>-2.6941 -4.0969 0.004 0 0 7.286750</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_67">
+          <pose>-2.3615 -3.5208 0.004 0 0 7.374016</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_68">
+          <pose>-2.0804 -2.9180 0.004 0 0 7.461283</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_69">
+          <pose>-1.8529 -2.2929 0.004 0 0 7.548549</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_70">
+          <pose>-1.6807 -1.6504 0.004 0 0 7.635815</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_71">
+          <pose>-1.5652 -0.9953 0.004 0 0 7.723082</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_inner_boundary_72">
+          <pose>-1.5073 -0.3326 0.004 0 0 7.810348</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_01">
+          <pose>1.4899 0.4635 0.004 0 0 1.614430</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_02">
+          <pose>1.4091 1.3868 0.004 0 0 1.701696</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_03">
+          <pose>1.2481 2.2997 0.004 0 0 1.788962</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_04">
+          <pose>1.0082 3.1950 0.004 0 0 1.876229</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_05">
+          <pose>0.6912 4.0660 0.004 0 0 1.963495</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_06">
+          <pose>0.2995 4.9061 0.004 0 0 2.050762</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_07">
+          <pose>-0.1640 5.7088 0.004 0 0 2.138028</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_08">
+          <pose>-0.6956 6.4681 0.004 0 0 2.225295</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_09">
+          <pose>-1.2914 7.1781 0.004 0 0 2.312561</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_10">
+          <pose>-1.9469 7.8336 0.004 0 0 2.399828</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_11">
+          <pose>-2.6569 8.4294 0.004 0 0 2.487094</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_12">
+          <pose>-3.4162 8.9610 0.004 0 0 2.574361</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_13">
+          <pose>-4.2189 9.4245 0.004 0 0 2.661627</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_14">
+          <pose>-5.0590 9.8162 0.004 0 0 2.748894</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_15">
+          <pose>-5.9300 10.1332 0.004 0 0 2.836160</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_16">
+          <pose>-6.8253 10.3731 0.004 0 0 2.923426</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_17">
+          <pose>-7.7382 10.5341 0.004 0 0 3.010693</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_18">
+          <pose>-8.6615 10.6149 0.004 0 0 3.097959</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_19">
+          <pose>-9.5885 10.6149 0.004 0 0 3.185226</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_20">
+          <pose>-10.5118 10.5341 0.004 0 0 3.272492</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_21">
+          <pose>-11.4247 10.3731 0.004 0 0 3.359759</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_22">
+          <pose>-12.3200 10.1332 0.004 0 0 3.447025</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_23">
+          <pose>-13.1910 9.8162 0.004 0 0 3.534292</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_24">
+          <pose>-14.0311 9.4245 0.004 0 0 3.621558</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_25">
+          <pose>-14.8338 8.9610 0.004 0 0 3.708825</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_26">
+          <pose>-15.5931 8.4294 0.004 0 0 3.796091</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_27">
+          <pose>-16.3031 7.8336 0.004 0 0 3.883358</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_28">
+          <pose>-16.9586 7.1781 0.004 0 0 3.970624</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_29">
+          <pose>-17.5544 6.4681 0.004 0 0 4.057891</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_30">
+          <pose>-18.0860 5.7088 0.004 0 0 4.145157</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_31">
+          <pose>-18.5495 4.9061 0.004 0 0 4.232423</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_32">
+          <pose>-18.9412 4.0660 0.004 0 0 4.319690</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_33">
+          <pose>-19.2582 3.1950 0.004 0 0 4.406956</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_34">
+          <pose>-19.4981 2.2997 0.004 0 0 4.494223</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_35">
+          <pose>-19.6591 1.3868 0.004 0 0 4.581489</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_36">
+          <pose>-19.7399 0.4635 0.004 0 0 4.668756</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_37">
+          <pose>-19.7399 -0.4635 0.004 0 0 4.756022</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_38">
+          <pose>-19.6591 -1.3868 0.004 0 0 4.843289</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_39">
+          <pose>-19.4981 -2.2997 0.004 0 0 4.930555</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_40">
+          <pose>-19.2582 -3.1950 0.004 0 0 5.017822</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_41">
+          <pose>-18.9412 -4.0660 0.004 0 0 5.105088</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_42">
+          <pose>-18.5495 -4.9061 0.004 0 0 5.192355</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_43">
+          <pose>-18.0860 -5.7088 0.004 0 0 5.279621</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_44">
+          <pose>-17.5544 -6.4681 0.004 0 0 5.366887</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_45">
+          <pose>-16.9586 -7.1781 0.004 0 0 5.454154</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_46">
+          <pose>-16.3031 -7.8336 0.004 0 0 5.541420</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_47">
+          <pose>-15.5931 -8.4294 0.004 0 0 5.628687</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_48">
+          <pose>-14.8338 -8.9610 0.004 0 0 5.715953</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_49">
+          <pose>-14.0311 -9.4245 0.004 0 0 5.803220</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_50">
+          <pose>-13.1910 -9.8162 0.004 0 0 5.890486</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_51">
+          <pose>-12.3200 -10.1332 0.004 0 0 5.977753</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_52">
+          <pose>-11.4247 -10.3731 0.004 0 0 6.065019</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_53">
+          <pose>-10.5118 -10.5341 0.004 0 0 6.152286</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_54">
+          <pose>-9.5885 -10.6149 0.004 0 0 6.239552</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_55">
+          <pose>-8.6615 -10.6149 0.004 0 0 6.326819</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_56">
+          <pose>-7.7382 -10.5341 0.004 0 0 6.414085</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_57">
+          <pose>-6.8253 -10.3731 0.004 0 0 6.501351</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_58">
+          <pose>-5.9300 -10.1332 0.004 0 0 6.588618</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_59">
+          <pose>-5.0590 -9.8162 0.004 0 0 6.675884</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_60">
+          <pose>-4.2189 -9.4245 0.004 0 0 6.763151</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_61">
+          <pose>-3.4162 -8.9610 0.004 0 0 6.850417</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_62">
+          <pose>-2.6569 -8.4294 0.004 0 0 6.937684</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_63">
+          <pose>-1.9469 -7.8336 0.004 0 0 7.024950</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_64">
+          <pose>-1.2914 -7.1781 0.004 0 0 7.112217</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_65">
+          <pose>-0.6956 -6.4681 0.004 0 0 7.199483</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_66">
+          <pose>-0.1640 -5.7088 0.004 0 0 7.286750</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_67">
+          <pose>0.2995 -4.9061 0.004 0 0 7.374016</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_68">
+          <pose>0.6912 -4.0660 0.004 0 0 7.461283</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_69">
+          <pose>1.0082 -3.1950 0.004 0 0 7.548549</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_70">
+          <pose>1.2481 -2.2997 0.004 0 0 7.635815</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_71">
+          <pose>1.4091 -1.3868 0.004 0 0 7.723082</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="left_outer_boundary_72">
+          <pose>1.4899 -0.4635 0.004 0 0 7.810348</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_01">
+          <pose>16.7427 0.3326 0.004 0 0 1.614430</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_02">
+          <pose>16.6848 0.9953 0.004 0 0 1.701696</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_03">
+          <pose>16.5693 1.6504 0.004 0 0 1.788962</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_04">
+          <pose>16.3971 2.2929 0.004 0 0 1.876229</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_05">
+          <pose>16.1696 2.9180 0.004 0 0 1.963495</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_06">
+          <pose>15.8885 3.5208 0.004 0 0 2.050762</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_07">
+          <pose>15.5559 4.0969 0.004 0 0 2.138028</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_08">
+          <pose>15.1743 4.6418 0.004 0 0 2.225295</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_09">
+          <pose>14.7467 5.1514 0.004 0 0 2.312561</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_10">
+          <pose>14.2764 5.6217 0.004 0 0 2.399828</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_11">
+          <pose>13.7668 6.0493 0.004 0 0 2.487094</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_12">
+          <pose>13.2219 6.4309 0.004 0 0 2.574361</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_13">
+          <pose>12.6458 6.7635 0.004 0 0 2.661627</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_14">
+          <pose>12.0430 7.0446 0.004 0 0 2.748894</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_15">
+          <pose>11.4179 7.2721 0.004 0 0 2.836160</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_16">
+          <pose>10.7754 7.4443 0.004 0 0 2.923426</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_17">
+          <pose>10.1203 7.5598 0.004 0 0 3.010693</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_18">
+          <pose>9.4576 7.6177 0.004 0 0 3.097959</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_19">
+          <pose>8.7924 7.6177 0.004 0 0 3.185226</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_20">
+          <pose>8.1297 7.5598 0.004 0 0 3.272492</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_21">
+          <pose>7.4746 7.4443 0.004 0 0 3.359759</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_22">
+          <pose>6.8321 7.2721 0.004 0 0 3.447025</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_23">
+          <pose>6.2070 7.0446 0.004 0 0 3.534292</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_24">
+          <pose>5.6042 6.7635 0.004 0 0 3.621558</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_25">
+          <pose>5.0281 6.4309 0.004 0 0 3.708825</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_26">
+          <pose>4.4832 6.0493 0.004 0 0 3.796091</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_27">
+          <pose>3.9736 5.6217 0.004 0 0 3.883358</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_28">
+          <pose>3.5033 5.1514 0.004 0 0 3.970624</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_29">
+          <pose>3.0757 4.6418 0.004 0 0 4.057891</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_30">
+          <pose>2.6941 4.0969 0.004 0 0 4.145157</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_31">
+          <pose>2.3615 3.5208 0.004 0 0 4.232423</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_32">
+          <pose>2.0804 2.9180 0.004 0 0 4.319690</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_33">
+          <pose>1.8529 2.2929 0.004 0 0 4.406956</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_34">
+          <pose>1.6807 1.6504 0.004 0 0 4.494223</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_35">
+          <pose>1.5652 0.9953 0.004 0 0 4.581489</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_36">
+          <pose>1.5073 0.3326 0.004 0 0 4.668756</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_37">
+          <pose>1.5073 -0.3326 0.004 0 0 4.756022</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_38">
+          <pose>1.5652 -0.9953 0.004 0 0 4.843289</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_39">
+          <pose>1.6807 -1.6504 0.004 0 0 4.930555</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_40">
+          <pose>1.8529 -2.2929 0.004 0 0 5.017822</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_41">
+          <pose>2.0804 -2.9180 0.004 0 0 5.105088</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_42">
+          <pose>2.3615 -3.5208 0.004 0 0 5.192355</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_43">
+          <pose>2.6941 -4.0969 0.004 0 0 5.279621</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_44">
+          <pose>3.0757 -4.6418 0.004 0 0 5.366887</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_45">
+          <pose>3.5033 -5.1514 0.004 0 0 5.454154</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_46">
+          <pose>3.9736 -5.6217 0.004 0 0 5.541420</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_47">
+          <pose>4.4832 -6.0493 0.004 0 0 5.628687</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_48">
+          <pose>5.0281 -6.4309 0.004 0 0 5.715953</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_49">
+          <pose>5.6042 -6.7635 0.004 0 0 5.803220</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_50">
+          <pose>6.2070 -7.0446 0.004 0 0 5.890486</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_51">
+          <pose>6.8321 -7.2721 0.004 0 0 5.977753</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_52">
+          <pose>7.4746 -7.4443 0.004 0 0 6.065019</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_53">
+          <pose>8.1297 -7.5598 0.004 0 0 6.152286</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_54">
+          <pose>8.7924 -7.6177 0.004 0 0 6.239552</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_55">
+          <pose>9.4576 -7.6177 0.004 0 0 6.326819</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_56">
+          <pose>10.1203 -7.5598 0.004 0 0 6.414085</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_57">
+          <pose>10.7754 -7.4443 0.004 0 0 6.501351</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_58">
+          <pose>11.4179 -7.2721 0.004 0 0 6.588618</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_59">
+          <pose>12.0430 -7.0446 0.004 0 0 6.675884</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_60">
+          <pose>12.6458 -6.7635 0.004 0 0 6.763151</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_61">
+          <pose>13.2219 -6.4309 0.004 0 0 6.850417</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_62">
+          <pose>13.7668 -6.0493 0.004 0 0 6.937684</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_63">
+          <pose>14.2764 -5.6217 0.004 0 0 7.024950</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_64">
+          <pose>14.7467 -5.1514 0.004 0 0 7.112217</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_65">
+          <pose>15.1743 -4.6418 0.004 0 0 7.199483</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_66">
+          <pose>15.5559 -4.0969 0.004 0 0 7.286750</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_67">
+          <pose>15.8885 -3.5208 0.004 0 0 7.374016</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_68">
+          <pose>16.1696 -2.9180 0.004 0 0 7.461283</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_69">
+          <pose>16.3971 -2.2929 0.004 0 0 7.548549</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_70">
+          <pose>16.5693 -1.6504 0.004 0 0 7.635815</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_71">
+          <pose>16.6848 -0.9953 0.004 0 0 7.723082</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_inner_boundary_72">
+          <pose>16.7427 -0.3326 0.004 0 0 7.810348</pose>
+          <geometry><box><size>0.6652 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_01">
+          <pose>19.7399 0.4635 0.004 0 0 1.614430</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_02">
+          <pose>19.6591 1.3868 0.004 0 0 1.701696</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_03">
+          <pose>19.4981 2.2997 0.004 0 0 1.788962</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_04">
+          <pose>19.2582 3.1950 0.004 0 0 1.876229</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_05">
+          <pose>18.9412 4.0660 0.004 0 0 1.963495</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_06">
+          <pose>18.5495 4.9061 0.004 0 0 2.050762</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_07">
+          <pose>18.0860 5.7088 0.004 0 0 2.138028</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_08">
+          <pose>17.5544 6.4681 0.004 0 0 2.225295</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_09">
+          <pose>16.9586 7.1781 0.004 0 0 2.312561</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_10">
+          <pose>16.3031 7.8336 0.004 0 0 2.399828</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_11">
+          <pose>15.5931 8.4294 0.004 0 0 2.487094</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_12">
+          <pose>14.8338 8.9610 0.004 0 0 2.574361</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_13">
+          <pose>14.0311 9.4245 0.004 0 0 2.661627</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_14">
+          <pose>13.1910 9.8162 0.004 0 0 2.748894</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_15">
+          <pose>12.3200 10.1332 0.004 0 0 2.836160</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_16">
+          <pose>11.4247 10.3731 0.004 0 0 2.923426</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_17">
+          <pose>10.5118 10.5341 0.004 0 0 3.010693</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_18">
+          <pose>9.5885 10.6149 0.004 0 0 3.097959</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_19">
+          <pose>8.6615 10.6149 0.004 0 0 3.185226</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_20">
+          <pose>7.7382 10.5341 0.004 0 0 3.272492</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_21">
+          <pose>6.8253 10.3731 0.004 0 0 3.359759</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_22">
+          <pose>5.9300 10.1332 0.004 0 0 3.447025</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_23">
+          <pose>5.0590 9.8162 0.004 0 0 3.534292</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_24">
+          <pose>4.2189 9.4245 0.004 0 0 3.621558</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_25">
+          <pose>3.4162 8.9610 0.004 0 0 3.708825</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_26">
+          <pose>2.6569 8.4294 0.004 0 0 3.796091</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_27">
+          <pose>1.9469 7.8336 0.004 0 0 3.883358</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_28">
+          <pose>1.2914 7.1781 0.004 0 0 3.970624</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_29">
+          <pose>0.6956 6.4681 0.004 0 0 4.057891</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_30">
+          <pose>0.1640 5.7088 0.004 0 0 4.145157</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_31">
+          <pose>-0.2995 4.9061 0.004 0 0 4.232423</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_32">
+          <pose>-0.6912 4.0660 0.004 0 0 4.319690</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_33">
+          <pose>-1.0082 3.1950 0.004 0 0 4.406956</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_34">
+          <pose>-1.2481 2.2997 0.004 0 0 4.494223</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_35">
+          <pose>-1.4091 1.3868 0.004 0 0 4.581489</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_36">
+          <pose>-1.4899 0.4635 0.004 0 0 4.668756</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_37">
+          <pose>-1.4899 -0.4635 0.004 0 0 4.756022</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_38">
+          <pose>-1.4091 -1.3868 0.004 0 0 4.843289</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_39">
+          <pose>-1.2481 -2.2997 0.004 0 0 4.930555</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_40">
+          <pose>-1.0082 -3.1950 0.004 0 0 5.017822</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_41">
+          <pose>-0.6912 -4.0660 0.004 0 0 5.105088</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_42">
+          <pose>-0.2995 -4.9061 0.004 0 0 5.192355</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_43">
+          <pose>0.1640 -5.7088 0.004 0 0 5.279621</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_44">
+          <pose>0.6956 -6.4681 0.004 0 0 5.366887</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_45">
+          <pose>1.2914 -7.1781 0.004 0 0 5.454154</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_46">
+          <pose>1.9469 -7.8336 0.004 0 0 5.541420</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_47">
+          <pose>2.6569 -8.4294 0.004 0 0 5.628687</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_48">
+          <pose>3.4162 -8.9610 0.004 0 0 5.715953</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_49">
+          <pose>4.2189 -9.4245 0.004 0 0 5.803220</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_50">
+          <pose>5.0590 -9.8162 0.004 0 0 5.890486</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_51">
+          <pose>5.9300 -10.1332 0.004 0 0 5.977753</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_52">
+          <pose>6.8253 -10.3731 0.004 0 0 6.065019</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_53">
+          <pose>7.7382 -10.5341 0.004 0 0 6.152286</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_54">
+          <pose>8.6615 -10.6149 0.004 0 0 6.239552</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_55">
+          <pose>9.5885 -10.6149 0.004 0 0 6.326819</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_56">
+          <pose>10.5118 -10.5341 0.004 0 0 6.414085</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_57">
+          <pose>11.4247 -10.3731 0.004 0 0 6.501351</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_58">
+          <pose>12.3200 -10.1332 0.004 0 0 6.588618</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_59">
+          <pose>13.1910 -9.8162 0.004 0 0 6.675884</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_60">
+          <pose>14.0311 -9.4245 0.004 0 0 6.763151</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_61">
+          <pose>14.8338 -8.9610 0.004 0 0 6.850417</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_62">
+          <pose>15.5931 -8.4294 0.004 0 0 6.937684</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_63">
+          <pose>16.3031 -7.8336 0.004 0 0 7.024950</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_64">
+          <pose>16.9586 -7.1781 0.004 0 0 7.112217</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_65">
+          <pose>17.5544 -6.4681 0.004 0 0 7.199483</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_66">
+          <pose>18.0860 -5.7088 0.004 0 0 7.286750</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_67">
+          <pose>18.5495 -4.9061 0.004 0 0 7.374016</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_68">
+          <pose>18.9412 -4.0660 0.004 0 0 7.461283</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_69">
+          <pose>19.2582 -3.1950 0.004 0 0 7.548549</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_70">
+          <pose>19.4981 -2.2997 0.004 0 0 7.635815</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_71">
+          <pose>19.6591 -1.3868 0.004 0 0 7.723082</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="right_outer_boundary_72">
+          <pose>19.7399 -0.4635 0.004 0 0 7.810348</pose>
+          <geometry><box><size>0.9269 0.08 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="entry_exit_left_boundary">
+          <pose>-1.500 0.000 0.004 0 0 0</pose>
+          <geometry><box><size>0.080 32.000 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="entry_exit_right_boundary">
+          <pose>1.500 0.000 0.004 0 0 0</pose>
+          <geometry><box><size>0.080 32.000 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+        <visual name="start_finish_line">
+          <pose>0.000 0.000 0.004 0 0 0</pose>
+          <geometry><box><size>3.000 0.100 0.004</size></box></geometry>
+          <material><ambient>0.95 0.95 0.95 1</ambient><diffuse>1 1 1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Inner cones: 17 markers per circle. The pattern is rotated by
+         half a cone interval so that the two central markers on each
+         side straddle the start / finish line symmetrically. Those four
+         tangent-point markers use yellow high cones. -->
+    <include>
+      <uri>model://track_cone_yellow_big</uri>
+      <name>left_inner_yellow_high_01</name>
+      <pose>-1.7527 1.3781 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_02</name>
+      <pose>-2.7484 3.9482 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_03</name>
+      <pose>-4.6052 5.9851 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_04</name>
+      <pose>-7.0725 7.2137 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_05</name>
+      <pose>-9.8170 7.4680 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_06</name>
+      <pose>-12.4680 6.7137 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_07</name>
+      <pose>-14.6676 5.0527 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_08</name>
+      <pose>-16.1185 2.7093 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_09</name>
+      <pose>-16.6250 0.0000 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_10</name>
+      <pose>-16.1185 -2.7093 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_11</name>
+      <pose>-14.6676 -5.0527 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_12</name>
+      <pose>-12.4680 -6.7137 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_13</name>
+      <pose>-9.8170 -7.4680 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_14</name>
+      <pose>-7.0725 -7.2137 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_15</name>
+      <pose>-4.6052 -5.9851 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>left_inner_red_16</name>
+      <pose>-2.7484 -3.9482 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_yellow_big</uri>
+      <name>left_inner_yellow_high_17</name>
+      <pose>-1.7527 -1.3781 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_yellow_big</uri>
+      <name>right_inner_yellow_high_01</name>
+      <pose>1.7527 -1.3781 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_02</name>
+      <pose>2.7484 -3.9482 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_03</name>
+      <pose>4.6052 -5.9851 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_04</name>
+      <pose>7.0725 -7.2137 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_05</name>
+      <pose>9.8170 -7.4680 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_06</name>
+      <pose>12.4680 -6.7137 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_07</name>
+      <pose>14.6676 -5.0527 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_08</name>
+      <pose>16.1185 -2.7093 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_09</name>
+      <pose>16.6250 -0.0000 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_10</name>
+      <pose>16.1185 2.7093 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_11</name>
+      <pose>14.6676 5.0527 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_12</name>
+      <pose>12.4680 6.7137 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_13</name>
+      <pose>9.8170 7.4680 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_14</name>
+      <pose>7.0725 7.2137 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_15</name>
+      <pose>4.6052 5.9851 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>right_inner_blue_16</name>
+      <pose>2.7484 3.9482 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_yellow_big</uri>
+      <name>right_inner_yellow_high_17</name>
+      <pose>1.7527 1.3781 0 0 0 0.000000</pose>
+    </include>
+
+    <!-- Outer cones: 13 outside each nominal 21.25 m diameter circle.
+         The 90 degree gaps face the central tangent entry / exit path. -->
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_01</name>
+      <pose>-1.5236 7.6014 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_02</name>
+      <pose>-5.0112 9.9317 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_03</name>
+      <pose>-9.1250 10.7500 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_04</name>
+      <pose>-13.2388 9.9317 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_05</name>
+      <pose>-16.7264 7.6014 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_06</name>
+      <pose>-19.0567 4.1138 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_07</name>
+      <pose>-19.8750 0.0000 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_08</name>
+      <pose>-19.0567 -4.1138 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_09</name>
+      <pose>-16.7264 -7.6014 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_10</name>
+      <pose>-13.2388 -9.9317 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_11</name>
+      <pose>-9.1250 -10.7500 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_12</name>
+      <pose>-5.0112 -9.9317 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_blue</uri>
+      <name>left_outer_blue_13</name>
+      <pose>-1.5236 -7.6014 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_01</name>
+      <pose>1.5236 -7.6014 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_02</name>
+      <pose>5.0112 -9.9317 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_03</name>
+      <pose>9.1250 -10.7500 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_04</name>
+      <pose>13.2388 -9.9317 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_05</name>
+      <pose>16.7264 -7.6014 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_06</name>
+      <pose>19.0567 -4.1138 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_07</name>
+      <pose>19.8750 0.0000 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_08</name>
+      <pose>19.0567 4.1138 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_09</name>
+      <pose>16.7264 7.6014 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_10</name>
+      <pose>13.2388 9.9317 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_11</name>
+      <pose>9.1250 10.7500 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_12</name>
+      <pose>5.0112 9.9317 0 0 0 0.000000</pose>
+    </include>
+    <include>
+      <uri>model://track_cone_red</uri>
+      <name>right_outer_red_13</name>
+      <pose>1.5236 7.6014 0 0 0 0.000000</pose>
+    </include>
+
+    <!-- The entry / exit tangent path remains open. -->
+
+    <include>
+      <uri>model://racecar</uri>
+      <name>racecar</name>
+      <!-- Vehicle front is approximately 15 m before the start / finish line. -->
+      <pose>0 -16.50 0 0 0 1.570796</pose>
+    </include>
+  </world>
+</sdf>

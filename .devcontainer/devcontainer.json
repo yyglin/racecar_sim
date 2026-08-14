@@ -1,0 +1,34 @@
+{
+    "name": "Racecar Simulation (ROS 2 Jazzy)",
+    "dockerComposeFile": "../compose.yaml",
+    "service": "simulation",
+    "runServices": [
+        "simulation"
+    ],
+    "workspaceFolder": "/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles",
+    "remoteUser": "developer",
+    "shutdownAction": "none",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-containers",
+                "ms-azuretools.vscode-docker",
+                "ms-python.debugpy",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.vscode-python-envs",
+                "ms-vscode.cmake-tools",
+                "ms-vscode.cpp-devtools",
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.cpptools-themes",
+                "openai.chatgpt",
+                "ranch-hand-robotics.rde-pack",
+                "ranch-hand-robotics.rde-ros-2",
+                "ranch-hand-robotics.urdf-editor",
+                "redhat.vscode-yaml",
+                "vizards.deepseek-v4-for-copilot"
+            ]
+        }
+    }
+}

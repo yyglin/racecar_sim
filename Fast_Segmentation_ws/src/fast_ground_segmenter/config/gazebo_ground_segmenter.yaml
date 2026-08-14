@@ -1,0 +1,26 @@
+ground_segmenter_node:
+  ros__parameters:
+    # Gazebo Harmonic 128-line LiDAR input. The launch file also overrides this
+    # value so a different simulated sensor topic can still be selected.
+    input_topic: /lidar/points
+
+    # Static flat-world ROI. The simulated LiDAR range is 0.3-50.0 m and its
+    # optical origin is 1.18 m above the ground plane.
+    min_range: 1.0
+    max_range: 50.0
+    min_z: -2.0
+    max_z: 1.0
+
+    # Polar grid resolution used for the 720 x 128 simulated point cloud.
+    num_segments: 360
+    num_bins: 120
+
+    # Ground-line fitting thresholds validated in flat_cones.sdf.
+    max_slope_deg: 10.0
+    max_fit_error: 0.15
+    max_start_height_error: 0.30
+    long_threshold: 2.0
+    max_long_height_error: 0.10
+
+    # Points within 20 cm of a fitted line are classified as ground.
+    max_point_to_line_distance: 0.20
