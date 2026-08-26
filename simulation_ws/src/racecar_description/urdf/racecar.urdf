@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<robot name="origins">
+  <link name="base_link">
+    <visual>
+       <geometry>
+          <mesh filename="package://racecar_description/urdf/chassis_lowpoly.stl" scale="1 1 1"/>
+       </geometry>
+    </visual>
+  </link>
+
+  <link name="left_rear_wheel_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://racecar_description/urdf/left_wheel_lowpoly.stl" scale="1 1 1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+
+    <collision>
+     <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+     <geometry>
+      <cylinder
+        radius="0.15"
+        length="0.08"/>
+     </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_rear_wheel_link" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_rear_wheel_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0.59 0"/>
+  </joint>
+
+  <link name="right_rear_wheel_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://racecar_description/urdf/right_wheel_lowpoly.stl" scale="1 1 1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+       <cylinder
+        radius="0.15"
+        length="0.08"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_rear_wheel_link" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_rear_wheel_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 -0.59 0"/>
+  </joint>
+
+  <link name="left_front_steering_wheel_link">
+  </link>
+
+  <joint name="left_front_steering_wheel_link" type="revolute">
+    <parent link="base_link"/>
+    <child link="left_front_steering_wheel_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.52359" upper="0.52359" effort="100" velocity="2.0"/>
+    <origin xyz="1.6 0.59 0"/>
+  </joint>
+
+  <link name="left_front_wheel_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://racecar_description/urdf/left_wheel_lowpoly.stl" scale="1 1 1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+       <cylinder
+        radius="0.15"
+        length="0.08"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_front_wheel_link" type="continuous">
+    <parent link="left_front_steering_wheel_link"/>
+    <child link="left_front_wheel_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+  <link name="right_front_steering_wheel_link">
+  </link>
+
+  <joint name="right_front_steering_wheel_link" type="revolute">
+    <parent link="base_link"/>
+    <child link="right_front_steering_wheel_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.52359" upper="0.52359" effort="100" velocity="2.0"/>
+    <origin xyz="1.6 -0.59 0"/>
+  </joint>
+
+  <link name="right_front_wheel_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://racecar_description/urdf/right_wheel_lowpoly.stl" scale="1 1 1"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+       <cylinder
+        radius="0.15"
+        length="0.08"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_front_wheel_link" type="continuous">
+    <parent link="right_front_steering_wheel_link"/>
+    <child link="right_front_wheel_link"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+
+  <link name="ground_link">
+  </link>
+
+  <joint name="ground_link" type="fixed">
+    <parent link="base_link"/>
+    <child link="ground_link"/>
+    <origin xyz="0 0 -0.5"/>
+  </joint>
+
+</robot>

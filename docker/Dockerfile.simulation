@@ -21,6 +21,8 @@ RUN apt-get update \
         python3-pip \
         python3-rosdep \
         python3-vcstool \
+        ros-jazzy-joint-state-publisher \
+        ros-jazzy-joint-state-publisher-gui \
         ros-jazzy-pcl-conversions \
         ros-jazzy-pcl-ros \
         ros-jazzy-robot-state-publisher \
