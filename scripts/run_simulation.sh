@@ -27,6 +27,11 @@ if [[ ! -x "${script_dir}/allow_x11.sh" ]]; then
   exit 1
 fi
 
+if [[ ! -t 0 ]]; then
+  echo "错误：键盘控制需要交互式终端，请在终端中运行本脚本。" >&2
+  exit 1
+fi
+
 export LOCAL_UID="${LOCAL_UID:-$(id -u)}"
 export LOCAL_GID="${LOCAL_GID:-$(id -g)}"
 
@@ -68,11 +73,36 @@ if docker compose --project-directory "${project_root}" -f "${compose_file}" \
   exit 1
 fi
 
-echo "[4/4] 启动 Gazebo、RViz 和地面分割算法……"
-echo "按 Ctrl+C 可停止本次 launch。"
+echo "[4/4] 启动 Gazebo、RViz、地面分割算法和键盘控制……"
 docker compose --project-directory "${project_root}" -f "${compose_file}" \
-  exec -T simulation bash -c \
-  "source /opt/ros/jazzy/setup.bash && \
-   source '${container_root}/Fast_Segmentation_ws/install/setup.bash' && \
-   source '${container_root}/simulation_ws/install/setup.bash' && \
-   ros2 launch racecar_gazebo simulation.launch.py"
+  exec simulation bash -c \
+  "set -Eeuo pipefail
+   source /opt/ros/jazzy/setup.bash
+   source '${container_root}/Fast_Segmentation_ws/install/setup.bash'
+   source '${container_root}/simulation_ws/install/setup.bash'
+
+   launch_log='${container_root}/log/simulation.launch.log'
+   mkdir -p '${container_root}/log'
+   ros2 launch racecar_gazebo simulation.launch.py >\"\${launch_log}\" 2>&1 &
+   launch_pid=\$!
+
+   stop_launch() {
+     if kill -0 \"\${launch_pid}\" 2>/dev/null; then
+       kill -INT \"\${launch_pid}\" 2>/dev/null || true
+       wait \"\${launch_pid}\" 2>/dev/null || true
+     fi
+   }
+   trap stop_launch EXIT
+
+   sleep 3
+   if ! kill -0 \"\${launch_pid}\" 2>/dev/null; then
+     echo '错误：simulation.launch.py 启动失败，最近的日志如下：' >&2
+     tail -n 80 \"\${launch_log}\" >&2 || true
+     launch_status=1
+     wait \"\${launch_pid}\" || launch_status=\$?
+     exit \"\${launch_status}\"
+   fi
+
+   echo 'Gazebo、RViz 和算法已启动。仿真日志：'\"\${launch_log}\"
+   echo '键盘控制已接管当前终端；按 Q、Esc 或 Ctrl+C 退出全部程序。'
+   ros2 run racecar_gazebo keyboard_teleop"
