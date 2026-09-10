@@ -1,5 +1,6 @@
 import os
 import shlex
+from pathlib import Path
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -9,6 +10,7 @@ from launch.actions import (
     LogInfo,
     OpaqueFunction,
     SetEnvironmentVariable,
+    TimerAction,
 )
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -68,7 +70,6 @@ def generate_launch_description():
         "racecar_description"
     )
     racecar_gazebo_share = get_package_share_directory("racecar_gazebo")
-    rviz_common_share = get_package_share_directory("rviz_common")
 
     default_world = os.path.join(
         racecar_gazebo_share, "worlds", "skidpad.sdf"
@@ -77,7 +78,12 @@ def generate_launch_description():
         racecar_gazebo_share, "config", "bridge.yaml"
     )
     model_path = os.path.join(racecar_description_share, "models")
-    default_rviz_config = os.path.join(rviz_common_share, "default.rviz")
+    description_package_parent = os.path.dirname(racecar_description_share)
+    urdf_path = Path(racecar_description_share) / "urdf" / "racecar.urdf"
+    robot_description = urdf_path.read_text(encoding="utf-8")
+    default_rviz_config = os.path.join(
+        racecar_description_share, "rviz", "racecar.rviz"
+    )
 
     world = LaunchConfiguration("world")
     gui = LaunchConfiguration("gui")
@@ -86,6 +92,44 @@ def generate_launch_description():
     rviz_config = LaunchConfiguration("rviz_config")
     paused = LaunchConfiguration("paused")
     verbosity = LaunchConfiguration("verbosity")
+    spawn_x = LaunchConfiguration("spawn_x")
+    spawn_y = LaunchConfiguration("spawn_y")
+    spawn_z = LaunchConfiguration("spawn_z")
+    spawn_yaw = LaunchConfiguration("spawn_yaw")
+
+    robot_state_publisher = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        name="robot_state_publisher",
+        output="screen",
+        parameters=[
+            {
+                "robot_description": robot_description,
+                "use_sim_time": True,
+            }
+        ],
+    )
+
+    spawn_racecar = Node(
+        package="ros_gz_sim",
+        executable="create",
+        name="spawn_racecar",
+        output="screen",
+        arguments=[
+            "-name",
+            "racecar",
+            "-topic",
+            "robot_description",
+            "-x",
+            spawn_x,
+            "-y",
+            spawn_y,
+            "-z",
+            spawn_z,
+            "-Y",
+            spawn_yaw,
+        ],
+    )
 
     bridge = Node(
         package="ros_gz_bridge",
@@ -129,7 +173,7 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "rviz",
-                default_value="false",
+                default_value="true",
                 description="Start RViz2",
             ),
             DeclareLaunchArgument(
@@ -147,10 +191,32 @@ def generate_launch_description():
                 default_value="3",
                 description="Gazebo console verbosity from 0 to 4",
             ),
+            DeclareLaunchArgument(
+                "spawn_x",
+                default_value="0.0",
+                description="Racecar initial x position in metres",
+            ),
+            DeclareLaunchArgument(
+                "spawn_y",
+                default_value="-16.5",
+                description="Racecar initial y position in metres",
+            ),
+            DeclareLaunchArgument(
+                "spawn_z",
+                default_value="0.23",
+                description="Racecar initial z position in metres",
+            ),
+            DeclareLaunchArgument(
+                "spawn_yaw",
+                default_value="1.570796",
+                description="Racecar initial yaw in radians",
+            ),
             SetEnvironmentVariable(
                 name="GZ_SIM_RESOURCE_PATH",
                 value=[
                     model_path,
+                    os.pathsep,
+                    description_package_parent,
                     os.pathsep,
                     EnvironmentVariable(
                         "GZ_SIM_RESOURCE_PATH", default_value=""
@@ -171,9 +237,20 @@ def generate_launch_description():
                     paused,
                     ", verbosity=",
                     verbosity,
+                    ", spawn=(",
+                    spawn_x,
+                    ", ",
+                    spawn_y,
+                    ", ",
+                    spawn_z,
+                    ", yaw ",
+                    spawn_yaw,
+                    ")",
                 ]
             ),
             OpaqueFunction(function=_launch_gazebo),
+            robot_state_publisher,
+            TimerAction(period=2.0, actions=[spawn_racecar]),
             bridge,
             rviz_node,
         ]

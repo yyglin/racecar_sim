@@ -47,8 +47,8 @@ RUN existing_group="$(getent group "${USER_GID}" | cut -d: -f1 || true)" \
     && chmod 0440 "/etc/sudoers.d/${USERNAME}" \
     && printf '%s\n' \
          'source /opt/ros/jazzy/setup.bash' \
-         '[[ -f /Fast_Segmentation_ws/install/setup.bash ]] && source /Fast_Segmentation_ws/install/setup.bash' \
-         '[[ -f /simulation_ws/install/setup.bash ]] && source /simulation_ws/install/setup.bash' \
+         '[[ -f /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/Fast_Segmentation_ws/install/setup.bash ]] && source /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/Fast_Segmentation_ws/install/setup.bash' \
+         '[[ -f /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/simulation_ws/install/setup.bash ]] && source /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/simulation_ws/install/setup.bash' \
          >> "/home/${USERNAME}/.bashrc" \
     && chown "${USER_UID}:${USER_GID}" "/home/${USERNAME}/.bashrc" \
     && install -d -m 0700 -o "${USER_UID}" -g "${USER_GID}" /tmp/runtime-developer
@@ -59,7 +59,7 @@ ENV ROS_DISTRO=jazzy \
     HOME=/home/${USERNAME} \
     CCACHE_DIR=/home/${USERNAME}/.cache/ccache
 
-WORKDIR /simulation_ws
+WORKDIR /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/simulation_ws
 USER ${USERNAME}
 
 CMD ["sleep", "infinity"]

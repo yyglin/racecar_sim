@@ -4,7 +4,7 @@ project(racecar_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY launch models rviz urdf
+  DIRECTORY models rviz urdf
   DESTINATION share/${PROJECT_NAME}
 )
 

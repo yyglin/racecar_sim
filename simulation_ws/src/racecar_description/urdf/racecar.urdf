@@ -1,143 +1,259 @@
 <?xml version="1.0"?>
-<robot name="origins">
+<robot name="racecar">
+  <!-- The base frame is located midway between the rear wheels. -->
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
   <link name="base_link">
+    <inertial>
+      <origin xyz="1.25 0 0.12" rpy="0 0 0"/>
+      <mass value="180.0"/>
+      <inertia ixx="22.24" ixy="0" ixz="0" iyy="111.75" iyz="0" izz="129.19"/>
+    </inertial>
     <visual>
-       <geometry>
-          <mesh filename="package://racecar_description/urdf/chassis_lowpoly.stl" scale="1 1 1"/>
-       </geometry>
+      <geometry>
+        <mesh filename="package://racecar_description/urdf/chassis_lowpoly.stl" scale="1 1 1"/>
+      </geometry>
     </visual>
+    <collision>
+      <origin xyz="1.25 0 0.10" rpy="0 0 0"/>
+      <geometry>
+        <box size="2.60 0.75 0.30"/>
+      </geometry>
+    </collision>
   </link>
 
   <link name="left_rear_wheel_link">
+    <inertial>
+      <mass value="4.0"/>
+      <inertia ixx="0.065" ixy="0" ixz="0" iyy="0.104" iyz="0" izz="0.065"/>
+    </inertial>
     <visual>
       <geometry>
         <mesh filename="package://racecar_description/urdf/left_wheel_lowpoly.stl" scale="1 1 1"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
     </visual>
-
     <collision>
-     <origin xyz="0 0 0" rpy="1.5708 0 0"/>
-     <geometry>
-      <cylinder
-        radius="0.15"
-        length="0.08"/>
-     </geometry>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.225" length="0.18"/>
+      </geometry>
     </collision>
   </link>
 
-  <joint name="left_rear_wheel_link" type="continuous">
+  <joint name="left_rear_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="left_rear_wheel_link"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0 0.59 0"/>
+    <dynamics damping="0.05" friction="0.0"/>
   </joint>
 
   <link name="right_rear_wheel_link">
+    <inertial>
+      <mass value="4.0"/>
+      <inertia ixx="0.065" ixy="0" ixz="0" iyy="0.104" iyz="0" izz="0.065"/>
+    </inertial>
     <visual>
       <geometry>
         <mesh filename="package://racecar_description/urdf/right_wheel_lowpoly.stl" scale="1 1 1"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
     </visual>
-
     <collision>
       <origin xyz="0 0 0" rpy="1.5708 0 0"/>
       <geometry>
-       <cylinder
-        radius="0.15"
-        length="0.08"/>
+        <cylinder radius="0.225" length="0.18"/>
       </geometry>
     </collision>
   </link>
 
-  <joint name="right_rear_wheel_link" type="continuous">
+  <joint name="right_rear_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="right_rear_wheel_link"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0 -0.59 0"/>
+    <dynamics damping="0.05" friction="0.0"/>
   </joint>
 
-  <link name="left_front_steering_wheel_link">
+  <link name="left_front_steering_link">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+    </inertial>
   </link>
 
-  <joint name="left_front_steering_wheel_link" type="revolute">
+  <joint name="left_front_steering_joint" type="revolute">
     <parent link="base_link"/>
-    <child link="left_front_steering_wheel_link"/>
+    <child link="left_front_steering_link"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.52359" upper="0.52359" effort="100" velocity="2.0"/>
+    <limit lower="-0.52359" upper="0.52359" effort="500" velocity="3.0"/>
     <origin xyz="1.6 0.59 0"/>
+    <dynamics damping="0.5" friction="0.1"/>
   </joint>
 
   <link name="left_front_wheel_link">
+    <inertial>
+      <mass value="4.0"/>
+      <inertia ixx="0.065" ixy="0" ixz="0" iyy="0.104" iyz="0" izz="0.065"/>
+    </inertial>
     <visual>
       <geometry>
         <mesh filename="package://racecar_description/urdf/left_wheel_lowpoly.stl" scale="1 1 1"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
     </visual>
-
     <collision>
       <origin xyz="0 0 0" rpy="1.5708 0 0"/>
       <geometry>
-       <cylinder
-        radius="0.15"
-        length="0.08"/>
+        <cylinder radius="0.225" length="0.18"/>
       </geometry>
     </collision>
   </link>
 
-  <joint name="left_front_wheel_link" type="continuous">
-    <parent link="left_front_steering_wheel_link"/>
+  <joint name="left_front_wheel_joint" type="continuous">
+    <parent link="left_front_steering_link"/>
     <child link="left_front_wheel_link"/>
     <axis xyz="0 1 0"/>
-    <origin xyz="0 0 0"/>
+    <dynamics damping="0.05" friction="0.0"/>
   </joint>
 
-  <link name="right_front_steering_wheel_link">
+  <link name="right_front_steering_link">
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+    </inertial>
   </link>
 
-  <joint name="right_front_steering_wheel_link" type="revolute">
+  <joint name="right_front_steering_joint" type="revolute">
     <parent link="base_link"/>
-    <child link="right_front_steering_wheel_link"/>
+    <child link="right_front_steering_link"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.52359" upper="0.52359" effort="100" velocity="2.0"/>
+    <limit lower="-0.52359" upper="0.52359" effort="500" velocity="3.0"/>
     <origin xyz="1.6 -0.59 0"/>
+    <dynamics damping="0.5" friction="0.1"/>
   </joint>
 
   <link name="right_front_wheel_link">
+    <inertial>
+      <mass value="4.0"/>
+      <inertia ixx="0.065" ixy="0" ixz="0" iyy="0.104" iyz="0" izz="0.065"/>
+    </inertial>
     <visual>
       <geometry>
         <mesh filename="package://racecar_description/urdf/right_wheel_lowpoly.stl" scale="1 1 1"/>
       </geometry>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
     </visual>
-
     <collision>
       <origin xyz="0 0 0" rpy="1.5708 0 0"/>
       <geometry>
-       <cylinder
-        radius="0.15"
-        length="0.08"/>
+        <cylinder radius="0.225" length="0.18"/>
       </geometry>
     </collision>
   </link>
 
-  <joint name="right_front_wheel_link" type="continuous">
-    <parent link="right_front_steering_wheel_link"/>
+  <joint name="right_front_wheel_joint" type="continuous">
+    <parent link="right_front_steering_link"/>
     <child link="right_front_wheel_link"/>
     <axis xyz="0 1 0"/>
-    <origin xyz="0 0 0"/>
+    <dynamics damping="0.05" friction="0.0"/>
   </joint>
 
-
-  <link name="ground_link">
+  <link name="lidar_link">
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.0024" ixy="0" ixz="0" iyy="0.0024" iyz="0" izz="0.0032"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder radius="0.08" length="0.10"/>
+      </geometry>
+      <material name="lidar_black">
+        <color rgba="0.1 0.1 0.1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.08" length="0.10"/>
+      </geometry>
+    </collision>
   </link>
 
-  <joint name="ground_link" type="fixed">
+  <joint name="lidar_fixed_joint" type="fixed">
     <parent link="base_link"/>
-    <child link="ground_link"/>
-    <origin xyz="0 0 -0.5"/>
+    <child link="lidar_link"/>
+    <origin xyz="0.95 0 0.73" rpy="0 0 0"/>
   </joint>
 
+  <gazebo reference="lidar_link">
+    <sensor name="top_lidar" type="gpu_lidar">
+      <topic>/lidar</topic>
+      <gz_frame_id>lidar_link</gz_frame_id>
+      <update_rate>10</update_rate>
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159265</min_angle>
+            <max_angle>3.14159265</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>128</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.436332</min_angle>
+            <max_angle>0.261799</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.3</min>
+          <max>50.0</max>
+          <resolution>0.02</resolution>
+        </range>
+      </lidar>
+    </sensor>
+  </gazebo>
+
+  <gazebo>
+    <plugin filename="gz-sim-ackermann-steering-system" name="gz::sim::systems::AckermannSteering">
+      <left_joint>left_front_wheel_joint</left_joint>
+      <left_joint>left_rear_wheel_joint</left_joint>
+      <right_joint>right_front_wheel_joint</right_joint>
+      <right_joint>right_rear_wheel_joint</right_joint>
+      <left_steering_joint>left_front_steering_joint</left_steering_joint>
+      <right_steering_joint>right_front_steering_joint</right_steering_joint>
+      <wheel_base>1.60</wheel_base>
+      <wheel_separation>1.18</wheel_separation>
+      <kingpin_width>1.18</kingpin_width>
+      <wheel_radius>0.225</wheel_radius>
+      <steering_limit>0.52359</steering_limit>
+      <steer_p_gain>5.0</steer_p_gain>
+      <min_velocity>-5.0</min_velocity>
+      <max_velocity>5.0</max_velocity>
+      <min_acceleration>-2.0</min_acceleration>
+      <max_acceleration>2.0</max_acceleration>
+      <min_jerk>-10.0</min_jerk>
+      <max_jerk>10.0</max_jerk>
+      <topic>/model/racecar/cmd_vel</topic>
+      <odom_topic>/model/racecar/odometry</odom_topic>
+      <tf_topic>/model/racecar/tf</tf_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_footprint</child_frame_id>
+      <odom_publish_frequency>50</odom_publish_frequency>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+      <topic>/model/racecar/joint_states</topic>
+      <joint_name>left_front_steering_joint</joint_name>
+      <joint_name>right_front_steering_joint</joint_name>
+      <joint_name>left_front_wheel_joint</joint_name>
+      <joint_name>right_front_wheel_joint</joint_name>
+      <joint_name>left_rear_wheel_joint</joint_name>
+      <joint_name>right_rear_wheel_joint</joint_name>
+    </plugin>
+  </gazebo>
 </robot>

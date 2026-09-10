@@ -70,20 +70,23 @@ docker compose exec algorithm bash
 docker compose exec simulation bash
 ```
 
-宿主机目录映射如下：
+项目根目录统一挂载到容器内：
 
 ```text
-./Fast_Segmentation_ws → /Fast_Segmentation_ws
-./simulation_ws        → /simulation_ws
-./data                 → /data（只读）
+. → /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles
+./data → /data（只读）
 ```
+
+执行 `docker compose exec algorithm bash` 后会直接进入
+`/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/Fast_Segmentation_ws`；
+执行 `docker compose exec simulation bash` 后会直接进入
+`/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/simulation_ws`。
 
 ### 3.2 编译工作区
 
 算法容器：
 
 ```bash
-cd /Fast_Segmentation_ws
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 source install/setup.bash
@@ -92,7 +95,6 @@ source install/setup.bash
 仿真容器：
 
 ```bash
-cd /simulation_ws
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 source install/setup.bash
