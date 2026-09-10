@@ -100,23 +100,20 @@ colcon build --symlink-install
 source install/setup.bash
 ```
 
-### 3.3 使用 rosbag 验证地面分割
+### 3.3 启动地面分割算法
 
-启动 rosbag 播放和算法节点：
+只启动地面分割节点：
 
 ```bash
-ros2 launch fast_ground_segmenter bag_ground_segmentation.launch.py \
-  bag_path:=/data/rosbag2_2022_04_14-trucks \
-  play_rate:=1.0
+ros2 launch fast_ground_segmenter fast_ground_segmenter_bringup.launch.py \
+  input_topic:=/sensing/lidar/top/rectified/pointcloud \
+  use_sim_time:=true
 ```
 
-也可以分别播放 rosbag 和运行节点：
+使用 rosbag 时，在另一个终端单独播放数据：
 
 ```bash
-ros2 bag play /data/rosbag2_2022_04_14-trucks --loop
-
-ros2 run fast_ground_segmenter ground_segmenter_node --ros-args \
-  -p input_topic:=/sensing/lidar/top/rectified/pointcloud
+ros2 bag play /data/rosbag2_2022_04_14-trucks --loop --clock
 ```
 
 ### 3.4 启动 Gazebo 联合仿真
@@ -124,15 +121,19 @@ ros2 run fast_ground_segmenter ground_segmenter_node --ros-args \
 在已加载算法与仿真工作区的终端中执行：
 
 ```bash
-ros2 launch fast_ground_segmenter gazebo_ground_segmentation.launch.py
+ros2 launch racecar_gazebo simulation.launch.py
 ```
 
 无桌面环境时：
 
 ```bash
-ros2 launch fast_ground_segmenter gazebo_ground_segmentation.launch.py \
+ros2 launch racecar_gazebo simulation.launch.py \
   gui:=false headless:=true rviz:=false
 ```
+
+该入口会统一启动 Gazebo、赛车、ROS-Gazebo 桥接、地面分割算法和
+RViz。RViz 默认以绿色显示 `/ground_points`，以红色显示
+`/nonground_points`。
 
 键盘控制节点：
 

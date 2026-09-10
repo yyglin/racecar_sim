@@ -66,6 +66,7 @@ def _launch_gazebo(context):
 
 
 def generate_launch_description():
+    segmenter_share = get_package_share_directory("fast_ground_segmenter")
     racecar_description_share = get_package_share_directory(
         "racecar_description"
     )
@@ -84,6 +85,14 @@ def generate_launch_description():
     default_rviz_config = os.path.join(
         racecar_description_share, "rviz", "racecar.rviz"
     )
+    default_segmenter_params = os.path.join(
+        segmenter_share, "config", "gazebo_ground_segmenter.yaml"
+    )
+    segmenter_bringup = os.path.join(
+        segmenter_share,
+        "launch",
+        "fast_ground_segmenter_bringup.launch.py",
+    )
 
     world = LaunchConfiguration("world")
     gui = LaunchConfiguration("gui")
@@ -96,6 +105,8 @@ def generate_launch_description():
     spawn_y = LaunchConfiguration("spawn_y")
     spawn_z = LaunchConfiguration("spawn_z")
     spawn_yaw = LaunchConfiguration("spawn_yaw")
+    segmenter_params = LaunchConfiguration("segmenter_params")
+    lidar_topic = LaunchConfiguration("lidar_topic")
 
     robot_state_publisher = Node(
         package="robot_state_publisher",
@@ -144,6 +155,15 @@ def generate_launch_description():
         ],
     )
 
+    ground_segmentation = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(segmenter_bringup),
+        launch_arguments={
+            "params_file": segmenter_params,
+            "input_topic": lidar_topic,
+            "use_sim_time": "true",
+        }.items(),
+    )
+
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",
@@ -182,6 +202,16 @@ def generate_launch_description():
                 description="Absolute path to an RViz2 configuration file",
             ),
             DeclareLaunchArgument(
+                "segmenter_params",
+                default_value=default_segmenter_params,
+                description="Ground segmenter parameter file",
+            ),
+            DeclareLaunchArgument(
+                "lidar_topic",
+                default_value="/lidar/points",
+                description="PointCloud2 topic processed by the segmenter",
+            ),
+            DeclareLaunchArgument(
                 "paused",
                 default_value="false",
                 description="Start Gazebo with simulation paused",
@@ -198,17 +228,17 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "spawn_y",
-                default_value="-16.5",
+                default_value="0.0",
                 description="Racecar initial y position in metres",
             ),
             DeclareLaunchArgument(
                 "spawn_z",
-                default_value="0.23",
+                default_value="0.0",
                 description="Racecar initial z position in metres",
             ),
             DeclareLaunchArgument(
                 "spawn_yaw",
-                default_value="1.570796",
+                default_value="0.0",
                 description="Racecar initial yaw in radians",
             ),
             SetEnvironmentVariable(
@@ -252,6 +282,7 @@ def generate_launch_description():
             robot_state_publisher,
             TimerAction(period=2.0, actions=[spawn_racecar]),
             bridge,
+            ground_segmentation,
             rviz_node,
         ]
     )
