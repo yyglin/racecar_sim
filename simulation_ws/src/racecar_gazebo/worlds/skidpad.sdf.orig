@@ -1845,11 +1845,5 @@
       <pose>1.5000 15.0000 0 0 0 0.000000</pose>
     </include>
 
-    <include>
-      <uri>model://racecar</uri>
-      <name>racecar</name>
-      <!-- Vehicle front is approximately 15 m before the start / finish line. -->
-      <pose>0 -16.50 0 0 0 1.570796</pose>
-    </include>
   </world>
 </sdf>

@@ -5,6 +5,7 @@ Fast_Segmentation_ws/log/
 simulation_ws/build/
 simulation_ws/install/
 simulation_ws/log/
+/log/
 
 # Large datasets / rosbag
 data/

@@ -17,6 +17,10 @@ services:
     network_mode: host
     ipc: host
     init: true
+    # Keep a runaway language server from exhausting the host. Setting
+    # memswap_limit equal to mem_limit also prevents swap thrashing.
+    mem_limit: 5g
+    memswap_limit: 5g
 
     environment:
       CODEX_HOME: /.codex
@@ -27,10 +31,9 @@ services:
     volumes:
       - ${HOME}/.codex:/.codex
       - .:/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles
-      - ./Fast_Segmentation_ws:/Fast_Segmentation_ws
       - ./data:/data:ro
 
-    working_dir: /Fast_Segmentation_ws
+    working_dir: /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/Fast_Segmentation_ws
     command: ["sleep", "infinity"]
     stdin_open: true
     tty: true
@@ -49,6 +52,8 @@ services:
     network_mode: host
     ipc: host
     init: true
+    mem_limit: 5g
+    memswap_limit: 5g
 
     environment:
       CODEX_HOME: /.codex
@@ -82,13 +87,9 @@ services:
     volumes:
       - ${HOME}/.codex:/.codex
       - .:/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles
-      - ./simulation_ws:/simulation_ws
-      # Keep the algorithm workspace at the same absolute path in both
-      # containers.  colcon --symlink-install creates links containing /Fast_Segmentation_ws.
-      - ./Fast_Segmentation_ws:/Fast_Segmentation_ws
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
 
-    working_dir: /simulation_ws
+    working_dir: /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/simulation_ws
     command: ["sleep", "infinity"]
     stdin_open: true
     tty: true
