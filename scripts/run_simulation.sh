@@ -76,10 +76,11 @@ fi
 echo "[4/4] 启动 Gazebo、RViz、地面分割算法和键盘控制……"
 docker compose --project-directory "${project_root}" -f "${compose_file}" \
   exec simulation bash -c \
-  "set -Eeuo pipefail
+  "set -Eeo pipefail
    source /opt/ros/jazzy/setup.bash
    source '${container_root}/Fast_Segmentation_ws/install/setup.bash'
    source '${container_root}/simulation_ws/install/setup.bash'
+   set -u
 
    launch_log='${container_root}/log/simulation.launch.log'
    mkdir -p '${container_root}/log'
