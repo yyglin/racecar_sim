@@ -1,0 +1,24 @@
+ground_segmenter_node:
+  ros__parameters:
+    input_topic: /livox/lidar
+
+    # Mid-360 blind-zone and vehicle self-return rejection.
+    min_range: 1.0
+    max_range: 40.0
+
+    # Coordinates are relative to the LiDAR. Adjust these after mounting so
+    # the road surface and the tallest objects of interest remain in the ROI.
+    min_z: -3.0
+    max_z: 2.0
+
+    # A 0.1 s non-repetitive Mid-360 frame is sparser than the simulated
+    # 128-line scan. Wider angular segments give each fit enough candidates.
+    num_segments: 180
+    num_bins: 80
+
+    max_slope_deg: 10.0
+    max_fit_error: 0.15
+    max_start_height_error: 0.30
+    long_threshold: 2.0
+    max_long_height_error: 0.12
+    max_point_to_line_distance: 0.20

@@ -27,11 +27,15 @@ services:
       ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-42}"
       ROS_AUTOMATIC_DISCOVERY_RANGE: "${ROS_AUTOMATIC_DISCOVERY_RANGE:-SUBNET}"
       RMW_IMPLEMENTATION: "${RMW_IMPLEMENTATION:-rmw_fastrtps_cpp}"
+      DISPLAY: "${DISPLAY:-:0}"
+      XDG_RUNTIME_DIR: /tmp/runtime-developer
+      QT_X11_NO_MITSHM: "1"
 
     volumes:
       - ${HOME}/.codex:/.codex
       - .:/Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles
       - ./data:/data:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
 
     working_dir: /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/Fast_Segmentation_ws
     command: ["sleep", "infinity"]

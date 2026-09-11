@@ -68,7 +68,7 @@ namespace fast_ground_segmenter{
 
         RCLCPP_INFO(
             this->get_logger(),
-            "Subsribed to '%s', publishing to '/debug/filtered_points'",
+            "Subscribed to '%s', publishing to '/debug/filtered_points'",
             input_topic.c_str()
         );
     }
@@ -78,15 +78,6 @@ namespace fast_ground_segmenter{
             const auto point_count = 
                static_cast<std::size_t>(message->width) * static_cast<std::size_t>(message->height);
         
-        RCLCPP_INFO(
-            this->get_logger(),
-            "Received cloud: points=%zu, stamp=%d.%09u, frame_id='%s'",
-            point_count,
-            message->header.stamp.sec,
-            message->header.stamp.nanosec,
-            message->header.frame_id.c_str()
-        );
-
         pcl::PointCloud<pcl::PointXYZI> pcl_input;
         pcl::fromROSMsg(*message, pcl_input);
         
@@ -146,5 +137,20 @@ namespace fast_ground_segmenter{
 
         ground_publisher_->publish(ground_message);
         nonground_publisher_->publish(nonground_message);
+
+        RCLCPP_INFO_THROTTLE(
+            this->get_logger(),
+            *this->get_clock(),
+            5000,
+            "Processed cloud: input=%zu, filtered=%zu, ground=%zu, nonground=%zu, "
+            "stamp=%d.%09u, frame_id='%s'",
+            point_count,
+            pcl_filtered.points.size(),
+            ground_cloud.points.size(),
+            nonground_cloud.points.size(),
+            message->header.stamp.sec,
+            message->header.stamp.nanosec,
+            message->header.frame_id.c_str()
+        );
     }
 }

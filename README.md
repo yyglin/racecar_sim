@@ -149,6 +149,133 @@ ros2 run racecar_gazebo keyboard_teleop
 | `Space` 或 `S` | 停车 |
 | `Q` 或 `Esc` | 停车并退出 |
 
+### 3.5 接入 Livox Mid-360 实机
+
+#### 3.5.1 接线与供电
+
+使用 Mid-360 官方 M12 一拖三转接线：
+
+1. 断电状态下，将 M12 航空插头与雷达连接并拧紧；
+2. 红色电源线接直流正极，黑色电源线接负极；工作范围为 9--27 V，建议使用
+   12 V、至少 2 A 的稳压电源；
+3. RJ45 接头直连电脑的普通以太网口。该网线只传输数据，**禁止接入 PoE 供电设备**；
+4. 首次测试不需要 GPS/IO 功能线，将未使用线头分别绝缘；
+5. 检查极性后通电，等待约 10 秒，再确认网口指示灯已经亮起。
+
+#### 3.5.2 设置电脑与雷达 IP
+
+Mid-360 出厂静态地址为 `192.168.1.1XX`，`XX` 是机身序列号最后两位。例如序列号
+末两位为 `12` 时，地址为 `192.168.1.112`。从机身二维码标签读取序列号，然后将
+电脑有线网卡设置到同一 `/24` 网段。当前电脑内置有线网卡名为 `eno1`，临时配置命令为：
+
+```bash
+ip -br link show eno1
+nmcli device modify eno1 ipv4.addresses 192.168.1.50/24 ipv4.method manual
+ip -br address show eno1
+ping -c 3 192.168.1.133  # 本项目当前 Mid-360 的地址
+```
+
+上述 `nmcli device modify` 是临时配置，断开网线或重启后可能需要再次执行。如果当前
+桌面策略不允许普通用户修改网络，可改用：
+
+```bash
+sudo ip link set eno1 up
+sudo ip address replace 192.168.1.50/24 dev eno1
+```
+
+如果第一条命令仍显示 `NO-CARRIER`，说明物理链路还没有建立，应检查雷达供电、M12
+插头、RJ45 网线和电脑网口。不要通过反复修改 IP 排查物理链路。如果雷达 IP 恰好是
+`192.168.1.150`，电脑不能再用 `.50`，可改用 `192.168.1.5`。
+
+#### 3.5.3 构建并启动
+
+推荐直接在宿主机项目根目录运行一键脚本。它会检查物理链路、配置网卡、测试雷达连通
+性、启动容器、增量编译算法，并启动 Livox 驱动、地面分割和 Foxglove Bridge：
+
+```bash
+./scripts/run_mid360.sh
+```
+
+脚本默认使用网卡 `eno1`、电脑地址 `192.168.1.50`、雷达地址 `192.168.1.133`，
+Foxglove 连接地址为 `ws://localhost:8765`。如需修改参数，可运行
+`./scripts/run_mid360.sh --help`。脚本以前台方式运行，按 `Ctrl+C` 会停止全部实机节点。
+
+下面是需要手动操作或排查问题时的等价步骤。
+
+算法镜像已固定安装官方 Livox SDK2 和 Livox ROS Driver 2。首次使用或 Dockerfile
+更新后构建镜像和项目：
+
+```bash
+docker compose build algorithm
+docker compose up -d algorithm
+./scripts/allow_x11.sh
+docker compose exec algorithm bash
+colcon build --symlink-install
+source install/setup.bash
+```
+
+在算法容器中启动驱动、地面分割和 RViz2。当前已检测到本项目所连接的雷达地址为
+`192.168.1.133`：
+
+```bash
+ros2 launch fast_ground_segmenter mid360_ground_segmentation.launch.py \
+  host_ip:=192.168.1.50 \
+  lidar_ip:=192.168.1.133
+```
+
+无图形桌面时增加 `rviz:=false`。启动入口将 `/livox/lidar` 以
+`pcl::PointXYZI` 所需的 `x/y/z/intensity` 字段送入算法，并发布：
+
+- `/ground_points`：绿色地面点；
+- `/nonground_points`：红色非地面点；
+- `/debug/filtered_points`：ROI 过滤后点云；
+- `/debug/bin_min_points`：极坐标桶最低点。
+
+另开一个算法容器终端检查输入频率和字段：
+
+```bash
+docker compose exec algorithm bash
+ros2 topic hz /livox/lidar
+ros2 topic echo /livox/lidar --once --field fields
+ros2 topic hz /ground_points
+```
+
+实车验证前建议先静置采集 rosbag，便于重复调参：
+
+```bash
+ros2 bag record -o /tmp/mid360_ground_test \
+  /livox/lidar /livox/imu \
+  /ground_points /nonground_points \
+  /debug/filtered_points /debug/bin_min_points
+```
+
+Mid-360 为非重复扫描，专用参数文件使用比仿真更宽的角度段。雷达安装高度、俯仰角和
+赛道环境确定后，应继续调整 `config/mid360_ground_segmenter.yaml` 中的 `min_z`、
+`max_z`、`num_segments` 和拟合阈值。
+
+#### 3.5.4 使用 Foxglove 查看点云
+
+上述实机启动入口默认同时运行 Foxglove Bridge，并仅监听本机
+`ws://127.0.0.1:8765`。在电脑上的 Foxglove 中：
+
+1. 选择 **Open connection**，连接类型选择 **Foxglove WebSocket**；
+2. 地址填写 `ws://localhost:8765`；
+3. 新建 **3D** 面板，将 Fixed frame 和 Display frame 都设置为 `livox_frame`；
+4. 在 3D 面板的 Topics 中打开 `/livox/lidar`、`/ground_points` 和
+   `/nonground_points`；建议将地面点设为绿色、非地面点设为红色；
+5. 若画面卡顿，可隐藏原始 `/livox/lidar`，仅显示两个分割结果，并适当调小点尺寸。
+
+可以在宿主机检查 Bridge 是否监听成功：
+
+```bash
+ss -ltnp | grep ':8765'
+```
+
+不使用 Foxglove 时，可在启动命令后增加 `foxglove:=false`。若 Foxglove 运行在局域网
+中的另一台电脑上，启动时增加 `foxglove_address:=0.0.0.0`，然后在远端连接
+`ws://<运行算法电脑的局域网IP>:8765`。只应在可信局域网中开放该监听地址，并确认
+主机防火墙允许 TCP 8765 端口。
+
 ## 4. 地面分割
 
 ### 4.1 处理流程

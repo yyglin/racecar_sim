@@ -6,6 +6,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG USERNAME=developer
 ARG USER_UID=1000
 ARG USER_GID=1000
+ARG LIVOX_SDK2_COMMIT=08f523c930b2f0ba1e98a6afaa8d7476bf479908
+ARG LIVOX_ROS_DRIVER2_COMMIT=4a1def929e5b59c7a8122d19fce6efba581ce9f7
 
 # ROS 2 Jazzy is built for Ubuntu 24.04 (Noble).  Install the algorithm and
 # day-to-day development dependencies in the image so a rebuilt container is
@@ -14,19 +16,45 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
         ccache \
+        cmake \
         gdb \
         git \
         less \
+        libapr1-dev \
         python3-colcon-common-extensions \
         python3-pip \
         python3-rosdep \
         python3-vcstool \
+        ros-jazzy-ament-cmake-auto \
         ros-jazzy-pcl-conversions \
         ros-jazzy-pcl-ros \
         ros-jazzy-rosbag2 \
         ros-jazzy-rosbag2-storage-default-plugins \
         ros-jazzy-rviz2 \
         sudo \
+    && rm -rf /var/lib/apt/lists/*
+
+# Build the vendor-supported Mid-360 SDK and ROS 2 driver in an isolated
+# overlay. Pin both repositories so image rebuilds remain reproducible.
+RUN git clone https://github.com/Livox-SDK/Livox-SDK2.git /tmp/Livox-SDK2 \
+    && git -C /tmp/Livox-SDK2 checkout "${LIVOX_SDK2_COMMIT}" \
+    && cmake -S /tmp/Livox-SDK2 -B /tmp/Livox-SDK2/build -DCMAKE_BUILD_TYPE=Release \
+    && cmake --build /tmp/Livox-SDK2/build --parallel "$(nproc)" \
+    && cmake --install /tmp/Livox-SDK2/build \
+    && ldconfig \
+    && mkdir -p /opt/livox_ws/src \
+    && git clone https://github.com/Livox-SDK/livox_ros_driver2.git \
+       /opt/livox_ws/src/livox_ros_driver2 \
+    && git -C /opt/livox_ws/src/livox_ros_driver2 checkout "${LIVOX_ROS_DRIVER2_COMMIT}" \
+    && source /opt/ros/jazzy/setup.bash \
+    && cd /opt/livox_ws/src/livox_ros_driver2 \
+    && ./build.sh jazzy \
+    && rm -rf /tmp/Livox-SDK2 /opt/livox_ws/build /opt/livox_ws/log
+
+# Foxglove Bridge exposes ROS 2 topics over WebSocket for the desktop and web
+# applications. Keep it in a separate layer so Livox SDK rebuilds stay cached.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ros-jazzy-foxglove-bridge \
     && rm -rf /var/lib/apt/lists/*
 
 # Match the host user's numeric IDs.  Ubuntu Noble images may already contain
@@ -47,9 +75,11 @@ RUN existing_group="$(getent group "${USER_GID}" | cut -d: -f1 || true)" \
     && chmod 0440 "/etc/sudoers.d/${USERNAME}" \
     && printf '%s\n' \
          'source /opt/ros/jazzy/setup.bash' \
+         'source /opt/livox_ws/install/setup.bash' \
          '[[ -f /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/Fast_Segmentation_ws/install/setup.bash ]] && source /Fast_Segmentation_of_3D_Point_Clouds_for_Ground_Vehicles/Fast_Segmentation_ws/install/setup.bash' \
          >> "/home/${USERNAME}/.bashrc" \
-    && chown "${USER_UID}:${USER_GID}" "/home/${USERNAME}/.bashrc"
+    && chown "${USER_UID}:${USER_GID}" "/home/${USERNAME}/.bashrc" \
+    && install -d -m 0700 -o "${USER_UID}" -g "${USER_GID}" /tmp/runtime-developer
 
 ENV ROS_DISTRO=jazzy \
     LANG=C.UTF-8 \
